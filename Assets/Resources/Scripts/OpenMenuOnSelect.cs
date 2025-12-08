@@ -24,6 +24,9 @@ public class OpenMenuOnSelect : MonoBehaviour
             menuCanvas.transform.SetParent(objectAnchor, false);
             menuCanvas.transform.localPosition = Vector3.zero; // the canvas becomes a child of the objectAnchor
             menuCanvas.transform.localRotation = Quaternion.identity;
+            // Vector3 worldPos = objectAnchor.position + Vector3.up * 0.1f;
+            // menuCanvas.transform.position = worldPos;
+            // menuCanvas.transform.SetParent(objectAnchor, true);
         }
     }
 }
