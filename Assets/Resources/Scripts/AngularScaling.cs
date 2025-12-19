@@ -25,7 +25,7 @@ public class AngularScaling : MonoBehaviour
         float distance = Vector3.Distance(transform.position, cam.position);
 
         // Scale changes relative to distance, but starting from your original UI size
-        float scaleFactor = distance / baseDistance;
+        float scaleFactor = Mathf.Clamp(distance / baseDistance, 0.8f, 1.2f);
 
         transform.localScale = initialScale * scaleFactor;
     }
