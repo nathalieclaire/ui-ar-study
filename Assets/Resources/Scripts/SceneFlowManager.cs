@@ -9,6 +9,16 @@ public class SceneFlowManager : MonoBehaviour
         if (trial == null) return;    // safety
 
         active = trial; // saves what cube is active rn so the manager controls the UI of the corresponding cube
+
+        // disable other cubes (keep visible, just not grabbable)
+        foreach (var cube in GameObject.FindGameObjectsWithTag("Cube"))
+        {
+            if (cube == active.gameObject) continue;
+
+            var col = cube.GetComponent<Collider>();
+            if (col != null) col.enabled = false;
+        }
+
         active.anchor.Mount();   // determines OA or HA (function from scipt UIAnchorController)
         ShowPage1(); // shows UI page 1 of active cube
     }
@@ -35,6 +45,14 @@ public class SceneFlowManager : MonoBehaviour
         if (active == null) return; // prevents NullReference crashes if a button fires when no trial is active.
 
         active.uiRoot.SetActive(false);
+
+        // re-enable all cubes
+        foreach (var cube in GameObject.FindGameObjectsWithTag("Cube"))
+        {
+            var col = cube.GetComponent<Collider>();
+            if (col != null) col.enabled = true;
+        }
+
         active = null; // sets cube inactive so no cube is active atm
     }
 }
