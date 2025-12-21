@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class SceneFlowManager : MonoBehaviour
 {
+    [Header("Stations (assign in Inspector)")]
+    public GameObject sunStation;
+    public GameObject waterStation;
     private CubeTrial active;
     public void StartTrial(CubeTrial trial)
     {
@@ -21,8 +24,6 @@ public class SceneFlowManager : MonoBehaviour
 
         active.anchor.Mount();   // determines OA or HA (function from scipt UIAnchorController)
         ShowPage1(); // shows UI page 1 of active cube
-
-        Debug.Log(Camera.main);
     }
     // note - in Unity editor: Set uiRoot (UI_parent) inactive by default in the scene/prefab, so it doesn’t show before selection.
     public void ShowPage1()
@@ -35,6 +36,9 @@ public class SceneFlowManager : MonoBehaviour
         active.uiPage3.SetActive(false);
 
         if (active.symbol != null) active.symbol.SetActive(false); // hide symbol
+
+        if (sunStation != null) sunStation.SetActive(false);
+        if (waterStation != null) waterStation.SetActive(false);
 
     }
 
@@ -57,6 +61,10 @@ public class SceneFlowManager : MonoBehaviour
         if (active.uiPage3 != null) active.uiPage3.SetActive(true);
 
         // if (active.symbol != null) active.symbol.SetActive(false); // optional: hide symbol after success
+
+        // stations appear now
+        if (sunStation != null) sunStation.SetActive(true);
+        if (waterStation != null) waterStation.SetActive(true);
     }
 
     public void CloseUI()
@@ -73,5 +81,11 @@ public class SceneFlowManager : MonoBehaviour
         }
 
         active = null; // sets cube inactive so no cube is active atm
+    }
+
+    // stations use this to check which cube is currently active
+    public CubeTrial GetActiveTrial()
+    {
+        return active;
     }
 }

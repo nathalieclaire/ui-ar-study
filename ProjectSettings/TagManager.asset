@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - Cube
+  - SunStation
+  - WaterStation
   layers:
   - Default
   - TransparentFX
