@@ -48,6 +48,12 @@ public class StationCheck : MonoBehaviour
             trial.transform.SetPositionAndRotation(snapPoint.position, snapPoint.rotation);
         }
 
+        // disable symbol visibility checking so it can’t re-trigger UI 3
+        var symbol = trial.symbol?.GetComponent<SymbolVisibilitySuccess>();
+        if (symbol != null) symbol.enabled = false;
+
+        flow.ShowPage4();
+
         // freeze it in place
         var rb = trial.GetComponent<Rigidbody>();
         if (rb != null)

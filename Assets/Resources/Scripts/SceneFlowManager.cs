@@ -34,6 +34,7 @@ public class SceneFlowManager : MonoBehaviour
         active.uiPage1.SetActive(true);
         active.uiPage2.SetActive(false);
         active.uiPage3.SetActive(false);
+        active.uiPage4.SetActive(false);
 
         if (active.symbol != null) active.symbol.SetActive(false); // hide symbol
 
@@ -65,6 +66,16 @@ public class SceneFlowManager : MonoBehaviour
         // stations appear now
         if (sunStation != null) sunStation.SetActive(true);
         if (waterStation != null) waterStation.SetActive(true);
+    }
+
+    public void ShowPage4()
+    {
+        if (active == null) return;
+
+        active.uiPage1.SetActive(false);
+        active.uiPage2.SetActive(false);
+        if (active.uiPage3 != null) active.uiPage3.SetActive(false);
+        if (active.uiPage4 != null) active.uiPage4.SetActive(true);
     }
 
     public void CloseUI()
