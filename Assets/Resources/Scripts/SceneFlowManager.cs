@@ -1,11 +1,44 @@
 using UnityEngine;
+using System.Collections;
+using UnityEngine.UI;
 
 public class SceneFlowManager : MonoBehaviour
 {
     [Header("Stations (assign in Inspector)")]
     public GameObject sunStation;
     public GameObject waterStation;
+
     private CubeTrial active;
+
+    // called by UI buttons
+    public void AnswerWrong(Button button)
+    {
+        if (active == null || button == null) return;
+        StartCoroutine(FlashButton(button, false));
+    }
+
+    public void AnswerCorrect(Button button)
+    {
+        if (active == null || button == null) return;
+        StartCoroutine(FlashButton(button, true));
+    }
+
+    IEnumerator FlashButton(Button button, bool correct)
+    {
+        Image img = button.GetComponent<Image>();
+        if (img == null) yield break;
+
+        Color original = img.color;
+        img.color = correct ? Color.green : Color.red;
+
+        yield return new WaitForSeconds(correct ? 1.0f : 0.25f);
+
+        img.color = original;
+
+        if (correct) CloseUI();
+    }
+    // ----------------------------------------------------------------------
+
     public void StartTrial(CubeTrial trial)
     {
         if (active != null) return; // don't start another trial while another one is still active
