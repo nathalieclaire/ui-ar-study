@@ -57,7 +57,7 @@ public class SymbolVisibilitySuccess : MonoBehaviour
             if (symbolRenderer != null)
                 symbolRenderer.material.color = detectedColor;
 
-            flow.CloseUI();
+            flow.ShowPage3();
         }
     }
 

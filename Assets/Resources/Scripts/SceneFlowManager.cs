@@ -32,6 +32,7 @@ public class SceneFlowManager : MonoBehaviour
         active.uiRoot.SetActive(true);
         active.uiPage1.SetActive(true);
         active.uiPage2.SetActive(false);
+        active.uiPage3.SetActive(false);
 
         if (active.symbol != null) active.symbol.SetActive(false); // hide symbol
 
@@ -45,6 +46,17 @@ public class SceneFlowManager : MonoBehaviour
         active.uiPage2.SetActive(true);
 
         if (active.symbol != null) active.symbol.SetActive(true); // show symbol
+    }
+
+    public void ShowPage3()
+    {
+        if (active == null) return;
+
+        active.uiPage1.SetActive(false);
+        active.uiPage2.SetActive(false);
+        if (active.uiPage3 != null) active.uiPage3.SetActive(true);
+
+        // if (active.symbol != null) active.symbol.SetActive(false); // optional: hide symbol after success
     }
 
     public void CloseUI()
