@@ -1,8 +1,11 @@
 using UnityEngine;
 
+using System.Collections;
+
 public class StationCheck : MonoBehaviour
 {
-    public string myStationTag; // set in inspector: "SunStation" or "WaterStation"
+    public string myStationTag;               // "WaterStation" or "SunStation"
+    public Transform snapPoint;               // assign SnapPoint here
     public Renderer stationRenderer;
     public Color okColor = Color.green;
     public Color wrongColor = Color.red;
@@ -19,10 +22,8 @@ public class StationCheck : MonoBehaviour
     {
         if (flow == null) return;
 
-        var trial = other.GetComponentInParent<CubeTrial>(); // cube carried in
+        var trial = other.GetComponentInParent<CubeTrial>();
         if (trial == null) return;
-
-        // only react to the currently active cube
         if (flow.GetActiveTrial() != trial) return;
 
         bool correct = (trial.requiredStationTag == myStationTag);
@@ -30,7 +31,36 @@ public class StationCheck : MonoBehaviour
         if (stationRenderer != null)
             stationRenderer.material.color = correct ? okColor : wrongColor;
 
-        // later: if correct, tell flow "station success" and move to next step
-        // if (correct) flow.OnPlacedAtCorrectStation();
+        if (correct)
+            StartCoroutine(SnapWhenReleased(trial));
+    }
+
+    IEnumerator SnapWhenReleased(CubeTrial trial)
+    {
+        var grab = trial.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
+        // wait until user releases
+        while (grab != null && grab.isSelected)
+            yield return null;
+
+        // snap
+        if (snapPoint != null)
+        {
+            trial.transform.SetPositionAndRotation(snapPoint.position, snapPoint.rotation);
+        }
+
+        // freeze it in place
+        var rb = trial.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+            rb.isKinematic = true;
+        }
+
+        // prevent re-grabbing
+        if (grab != null) grab.enabled = false;
+
+        // optional: parent it to the station so it stays
+        trial.transform.SetParent(transform, true);
     }
 }
