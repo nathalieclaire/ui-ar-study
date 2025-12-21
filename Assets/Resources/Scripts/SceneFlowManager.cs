@@ -21,6 +21,8 @@ public class SceneFlowManager : MonoBehaviour
 
         active.anchor.Mount();   // determines OA or HA (function from scipt UIAnchorController)
         ShowPage1(); // shows UI page 1 of active cube
+
+        Debug.Log(Camera.main);
     }
     // note - in Unity editor: Set uiRoot (UI_parent) inactive by default in the scene/prefab, so it doesn’t show before selection.
     public void ShowPage1()
@@ -30,6 +32,9 @@ public class SceneFlowManager : MonoBehaviour
         active.uiRoot.SetActive(true);
         active.uiPage1.SetActive(true);
         active.uiPage2.SetActive(false);
+
+        if (active.symbol != null) active.symbol.SetActive(false); // hide symbol
+
     }
 
     public void ShowPage2()
@@ -38,6 +43,8 @@ public class SceneFlowManager : MonoBehaviour
 
         active.uiPage1.SetActive(false);
         active.uiPage2.SetActive(true);
+
+        if (active.symbol != null) active.symbol.SetActive(true); // show symbol
     }
 
     public void CloseUI()
