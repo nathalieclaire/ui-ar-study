@@ -14,6 +14,8 @@ public class SceneFlowManager : MonoBehaviour
 
     private CubeTrial active;
 
+    private CubeTrial lastCompletedTrial;
+
     // ---------- NEW: called by StationCheck when a cube snaps correctly ----------
     public void OnPlantSnappedCorrectly()
     {
@@ -48,21 +50,50 @@ public class SceneFlowManager : MonoBehaviour
         if (correct) OnCorrectAnswered();
     }
 
+    IEnumerator FadeOutAndDisableCube(CubeTrial trial)
+    {
+        Renderer[] renderers = trial.GetComponentsInChildren<Renderer>();
+        float duration = 2f;
+        float t = 0f;
+
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, t / duration);
+
+            foreach (var r in renderers)
+            {
+                foreach (var mat in r.materials)
+                {
+                    if (mat.HasProperty("_Color"))
+                    {
+                        Color c = mat.color;
+                        c.a = alpha;
+                        mat.color = c;
+                    }
+                }
+            }
+
+            yield return null;
+        }
+
+        trial.gameObject.SetActive(false);
+    }
+
     //!! after correct answer on UI4: go to UI5 or UI6 (uiDone)
     void OnCorrectAnswered() //!!
     {
         if (active == null) return;
 
-        active.uiPage4?.SetActive(false); //!! hide UI4
+        active.uiPage4?.SetActive(false); //ide UI4
 
-        if (snappedCorrectCount < totalPlants) //!!
-            active.uiPage5?.SetActive(true);  //!! show UI5
+        lastCompletedTrial = active; // remember cube for UI5 / UI6
+
+        if (snappedCorrectCount < totalPlants)
+            active.uiPage5?.SetActive(true);  //how UI5
         else
-            active.uiDone?.SetActive(true);   //!! show UI6 (done)
-
-        //!! end "active" so StartTrial can happen again later 
-        //(but we do NOT re-enable other cubes yet)
-        active = null; //!!
+            active.uiDone?.SetActive(true);   //show UI6 (done)
+        active = null;
     }
     // ----------------------------------------------------------------------
 
@@ -136,6 +167,22 @@ public class SceneFlowManager : MonoBehaviour
         active.uiPage2.SetActive(false);
         if (active.uiPage3 != null) active.uiPage3.SetActive(false);
         if (active.uiPage4 != null) active.uiPage4.SetActive(true);
+    }
+
+    public void CloseUI5()
+    {
+        if (lastCompletedTrial == null) return;
+
+        StartCoroutine(FadeOutAndDisableCube(lastCompletedTrial));
+
+        // re-enable other cubes
+        foreach (var cube in GameObject.FindGameObjectsWithTag("Cube"))
+        {
+            var col = cube.GetComponent<Collider>();
+            if (col != null) col.enabled = true;
+        }
+
+        lastCompletedTrial = null;
     }
 
     public void CloseUI()
