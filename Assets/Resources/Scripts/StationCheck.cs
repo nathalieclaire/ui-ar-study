@@ -48,6 +48,9 @@ public class StationCheck : MonoBehaviour
         while (grab != null && grab.isSelected)
             yield return null;
 
+        // ADD THIS LINE TO PREVENT MULTIPLE COROUTINES FROM SNAPPING THE SAME TRIAL (re-check after waiting)
+        if (trial.snappedCorrectly) yield break;
+
         // snap
         if (snapPoint != null)
         {
@@ -57,6 +60,8 @@ public class StationCheck : MonoBehaviour
         // disable symbol visibility checking so it can’t re-trigger UI 3
         var symbol = trial.symbol?.GetComponent<SymbolVisibilitySuccess>();
         if (symbol != null) symbol.enabled = false;
+
+        trial.snappedCorrectly = true; // mark as snapped correctly so it doesn't re-trigger
 
         flow.OnPlantSnappedCorrectly();
         flow.ShowPage4();

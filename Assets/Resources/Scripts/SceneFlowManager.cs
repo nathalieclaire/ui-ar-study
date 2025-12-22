@@ -53,7 +53,7 @@ public class SceneFlowManager : MonoBehaviour
     IEnumerator FadeOutAndDisableCube(CubeTrial trial)
     {
         Renderer[] renderers = trial.GetComponentsInChildren<Renderer>();
-        float duration = 3f;
+        float duration = 2f;
         float t = 0f;
 
         while (t < duration)
