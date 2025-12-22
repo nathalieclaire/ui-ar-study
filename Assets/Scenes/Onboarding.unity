@@ -2132,6 +2132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anchor: {fileID: 434837959}
+  snappedCorrectly: 0
   requiredStationTag: 
   symbol: {fileID: 0}
   uiRoot: {fileID: 1770953050}
@@ -3163,6 +3164,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 2.04
       objectReference: {fileID: 0}
+    - target: {fileID: 3348257317897739888, guid: d48511a49a53244df816205864d141c4, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 9013b3c8832394b8ab5678cc8eb8641f, type: 2}
     - target: {fileID: 4928923987867890929, guid: d48511a49a53244df816205864d141c4, type: 3}
       propertyPath: m_Name
       value: Cube_grey
@@ -4551,6 +4556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anchor: {fileID: 1094490349}
+  snappedCorrectly: 0
   requiredStationTag: SunStation
   symbol: {fileID: 176882496}
   uiRoot: {fileID: 114266339}
@@ -9948,6 +9954,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anchor: {fileID: 7783684915861206710}
+  snappedCorrectly: 0
   requiredStationTag: 
   symbol: {fileID: 0}
   uiRoot: {fileID: 2035208545}

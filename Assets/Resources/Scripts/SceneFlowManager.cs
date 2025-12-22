@@ -53,7 +53,7 @@ public class SceneFlowManager : MonoBehaviour
     IEnumerator FadeOutAndDisableCube(CubeTrial trial)
     {
         Renderer[] renderers = trial.GetComponentsInChildren<Renderer>();
-        float duration = 4f;
+        float duration = 3f;
         float t = 0f;
 
         while (t < duration)
@@ -90,7 +90,7 @@ public class SceneFlowManager : MonoBehaviour
         lastCompletedTrial = active; // remember cube for UI5 / UI6
 
         if (snappedCorrectCount < totalPlants)
-            active.uiPage5?.SetActive(true);  //how UI5
+            active.uiPage5?.SetActive(true);  //show UI5
         else
             active.uiDone?.SetActive(true);   //show UI6 (done)
         active = null;
