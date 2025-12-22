@@ -10,5 +10,8 @@ public class CubeTrial : MonoBehaviour
     public GameObject uiPage2;
     public GameObject uiPage3;
     public GameObject uiPage4;
+
+    public GameObject uiPage5;
+    public GameObject uiDone;
     // all additional UI pages fo here
 }

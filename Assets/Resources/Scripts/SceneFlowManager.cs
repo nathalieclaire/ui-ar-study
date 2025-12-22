@@ -8,7 +8,17 @@ public class SceneFlowManager : MonoBehaviour
     public GameObject sunStation;
     public GameObject waterStation;
 
+    [Header("Progress")]
+    public int totalPlants = 3;
+    private int snappedCorrectCount = 0;
+
     private CubeTrial active;
+
+    // ---------- NEW: called by StationCheck when a cube snaps correctly ----------
+    public void OnPlantSnappedCorrectly()
+    {
+        snappedCorrectCount++;
+    }
 
     // called by UI buttons
     public void AnswerWrong(Button button)
@@ -35,7 +45,24 @@ public class SceneFlowManager : MonoBehaviour
 
         img.color = original;
 
-        if (correct) CloseUI();
+        if (correct) OnCorrectAnswered();
+    }
+
+    //!! after correct answer on UI4: go to UI5 or UI6 (uiDone)
+    void OnCorrectAnswered() //!!
+    {
+        if (active == null) return;
+
+        active.uiPage4?.SetActive(false); //!! hide UI4
+
+        if (snappedCorrectCount < totalPlants) //!!
+            active.uiPage5?.SetActive(true);  //!! show UI5
+        else
+            active.uiDone?.SetActive(true);   //!! show UI6 (done)
+
+        //!! end "active" so StartTrial can happen again later 
+        //(but we do NOT re-enable other cubes yet)
+        active = null; //!!
     }
     // ----------------------------------------------------------------------
 

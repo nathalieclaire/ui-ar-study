@@ -52,6 +52,7 @@ public class StationCheck : MonoBehaviour
         var symbol = trial.symbol?.GetComponent<SymbolVisibilitySuccess>();
         if (symbol != null) symbol.enabled = false;
 
+        flow.OnPlantSnappedCorrectly();
         flow.ShowPage4();
 
         // freeze it in place
