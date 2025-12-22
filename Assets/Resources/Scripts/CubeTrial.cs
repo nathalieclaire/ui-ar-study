@@ -3,6 +3,8 @@ using UnityEngine;
 public class CubeTrial : MonoBehaviour
 {
     public UIAnchorController anchor;
+
+    public bool snappedCorrectly = false;
     public string requiredStationTag; // "SunStation" or "WaterStation"
     public GameObject symbol;
     public GameObject uiRoot;

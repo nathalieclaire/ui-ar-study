@@ -26,6 +26,9 @@ public class StationCheck : MonoBehaviour
         if (trial == null) return;
         if (flow.GetActiveTrial() != trial) return;
 
+        // NEW: ignore if this cube already snapped correctly
+        if (trial.snappedCorrectly) return;
+
         bool correct = (trial.requiredStationTag == myStationTag);
 
         if (stationRenderer != null)
@@ -37,6 +40,9 @@ public class StationCheck : MonoBehaviour
 
     IEnumerator SnapWhenReleased(CubeTrial trial)
     {
+        // NEW: if another coroutine already claimed it, stop
+        if (trial.snappedCorrectly) yield break;
+
         var grab = trial.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
         // wait until user releases
         while (grab != null && grab.isSelected)
