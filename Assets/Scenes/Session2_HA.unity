@@ -14646,7 +14646,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anchor: {fileID: 7783684915861206710}
-  snappedCorrectly: 1
+  snappedCorrectly: 0
   requiredStationTag: SunStation
   symbol: {fileID: 681902206}
   uiRoot: {fileID: 2035208545}

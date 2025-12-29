@@ -78,6 +78,9 @@ public class SceneFlowManager : MonoBehaviour
         }
 
         trial.gameObject.SetActive(false);
+        // when fade is done: hide UI of cube as well (bc HA UI wasn't parented to cube anymore and therefore still showing) regardless of parent 
+            if (trial.uiRoot != null)                     
+                trial.uiRoot.SetActive(false);
     }
 
     //!! after correct answer on UI4: go to UI5 or UI6 (uiDone)
