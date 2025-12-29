@@ -558,8 +558,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1698457536}
-        m_TargetAssemblyTypeName: AppFlowManager, Assembly-CSharp
+      - m_Target: {fileID: 986726819}
+        m_TargetAssemblyTypeName: AppFlowButtonBridge, Assembly-CSharp
         m_MethodName: GoToSetAnchors
         m_Mode: 1
         m_Arguments:
@@ -981,8 +981,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1698457536}
-        m_TargetAssemblyTypeName: AppFlowManager, Assembly-CSharp
+      - m_Target: {fileID: 986726819}
+        m_TargetAssemblyTypeName: AppFlowButtonBridge, Assembly-CSharp
         m_MethodName: StartOnboarding
         m_Mode: 1
         m_Arguments:
@@ -1192,8 +1192,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1698457536}
-        m_TargetAssemblyTypeName: AppFlowManager, Assembly-CSharp
+      - m_Target: {fileID: 986726819}
+        m_TargetAssemblyTypeName: AppFlowButtonBridge, Assembly-CSharp
         m_MethodName: StartSession
         m_Mode: 1
         m_Arguments:
@@ -1286,6 +1286,50 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &986726818
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 986726820}
+  - component: {fileID: 986726819}
+  m_Layer: 0
+  m_Name: AppFlowButtonBridge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &986726819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986726818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eeb984fe8afa34aab88a14f5d2460d46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &986726820
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986726818}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.6621337, y: -1.3966448, z: -0.47639242}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2025,3 +2069,4 @@ SceneRoots:
   - {fileID: 314861066}
   - {fileID: 1375737369}
   - {fileID: 1698457537}
+  - {fileID: 986726820}
