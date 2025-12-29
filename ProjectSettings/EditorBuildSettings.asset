@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: a131f057692b04cc593527d5f8058c71
   - enabled: 1
+    path: Assets/Scenes/SetAnchors.unity
+    guid: b80b80dfdacdf4974be91f216f4a0111
+  - enabled: 1
     path: Assets/Scenes/Onboarding.unity
     guid: aa599e33997324194a5d54fa0d97afeb
   - enabled: 1
