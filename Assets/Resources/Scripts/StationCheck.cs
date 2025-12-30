@@ -26,10 +26,18 @@ public class StationCheck : MonoBehaviour
         if (trial == null) return;
         if (flow.GetActiveTrial() != trial) return;
 
-        // NEW: ignore if this cube already snapped correctly
+        // ignore if this cube already snapped correctly
         if (trial.snappedCorrectly) return;
 
         bool correct = (trial.requiredStationTag == myStationTag);
+
+        // ❗ NEW: if wrong station → log station error on the cube
+        if (!correct)
+        {
+            var logger = trial.GetComponent<TrialLogger>();   // Logger is on the Cube
+            if (logger != null)
+                logger.LogStationError();
+        }
 
         if (stationRenderer != null)
             stationRenderer.material.color = correct ? okColor : wrongColor;
@@ -40,7 +48,7 @@ public class StationCheck : MonoBehaviour
 
     IEnumerator SnapWhenReleased(CubeTrial trial)
     {
-        // NEW: if another coroutine already claimed it, stop
+        // if another coroutine already claimed it, stop
         if (trial.snappedCorrectly) yield break;
 
         var grab = trial.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();

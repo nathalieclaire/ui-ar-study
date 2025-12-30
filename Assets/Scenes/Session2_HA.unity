@@ -119,6 +119,50 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &2680116
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2680118}
+  - component: {fileID: 2680117}
+  m_Layer: 0
+  m_Name: LoggingButtonBridge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2680117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2680116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a77d512c914f463293c55a2bb9d971d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &2680118
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2680116}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &11821115
 GameObject:
   m_ObjectHideFlags: 0
@@ -1349,6 +1393,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 2680117}
+        m_TargetAssemblyTypeName: LoggingButtonBridge, Assembly-CSharp
+        m_MethodName: SendHeadAnchoredResult
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 717485161}
         m_TargetAssemblyTypeName: AppFlowButtonBridge, Assembly-CSharp
         m_MethodName: ReturnToMainMenu
@@ -3244,6 +3300,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 2680117}
+        m_TargetAssemblyTypeName: LoggingButtonBridge, Assembly-CSharp
+        m_MethodName: SendHeadAnchoredResult
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 717485161}
         m_TargetAssemblyTypeName: AppFlowButtonBridge, Assembly-CSharp
         m_MethodName: ReturnToMainMenu
@@ -4419,6 +4487,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4928923987867890929, guid: d48511a49a53244df816205864d141c4, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1094490362}
+    - targetCorrespondingSourceObject: {fileID: 4928923987867890929, guid: d48511a49a53244df816205864d141c4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1094490369}
   m_SourcePrefab: {fileID: 100100000, guid: d48511a49a53244df816205864d141c4, type: 3}
 --- !u!1 &773200030
 GameObject:
@@ -6621,6 +6692,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7570637255330173124, guid: d48511a49a53244df816205864d141c4, type: 3}
   m_PrefabInstance: {fileID: 773190229}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1094490369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1094490348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7e10b7f1917246b39d420311139881f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trialIndex: 2
+  headAnchored: 1
 --- !u!1 &1099318657
 GameObject:
   m_ObjectHideFlags: 0
@@ -7011,6 +7096,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 1120491491}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8313770552096744942}
+        m_TargetAssemblyTypeName: TrialLogger, Assembly-CSharp
+        m_MethodName: LogMCError
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -8377,6 +8474,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 1321856424}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8825839948264526187}
+        m_TargetAssemblyTypeName: TrialLogger, Assembly-CSharp
+        m_MethodName: LogMCError
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -10027,6 +10136,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 1574226627}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8825839948264526187}
+        m_TargetAssemblyTypeName: TrialLogger, Assembly-CSharp
+        m_MethodName: LogMCError
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -13374,6 +13495,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 2680117}
+        m_TargetAssemblyTypeName: LoggingButtonBridge, Assembly-CSharp
+        m_MethodName: SendHeadAnchoredResult
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 717485161}
         m_TargetAssemblyTypeName: AppFlowButtonBridge, Assembly-CSharp
         m_MethodName: ReturnToMainMenu
@@ -13948,6 +14081,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1094490369}
+        m_TargetAssemblyTypeName: TrialLogger, Assembly-CSharp
+        m_MethodName: LogMCError
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2047411055
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14104,6 +14249,18 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 2117357761}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.UI.Button, UnityEngine.UI
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8313770552096744942}
+        m_TargetAssemblyTypeName: TrialLogger, Assembly-CSharp
+        m_MethodName: LogMCError
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -14390,6 +14547,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1094490369}
+        m_TargetAssemblyTypeName: TrialLogger, Assembly-CSharp
+        m_MethodName: LogMCError
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &2125451298
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14504,6 +14673,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4411716654070548185, guid: 2a19b9f4c11bb4a719017f891000f6de, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8825839948264526180}
+    - targetCorrespondingSourceObject: {fileID: 4411716654070548185, guid: 2a19b9f4c11bb4a719017f891000f6de, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8825839948264526187}
   m_SourcePrefab: {fileID: 100100000, guid: 2a19b9f4c11bb4a719017f891000f6de, type: 3}
 --- !u!114 &7783684915861206710 stripped
 MonoBehaviour:
@@ -14622,12 +14794,29 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1587199038102165957, guid: 28ad302c5491347faa3850cde39ee14a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 434837966}
+    - targetCorrespondingSourceObject: {fileID: 1587199038102165957, guid: 28ad302c5491347faa3850cde39ee14a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8313770552096744942}
   m_SourcePrefab: {fileID: 100100000, guid: 28ad302c5491347faa3850cde39ee14a, type: 3}
 --- !u!4 &8313770552096744941 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6190599482605082938, guid: 28ad302c5491347faa3850cde39ee14a, type: 3}
   m_PrefabInstance: {fileID: 8313770552096744940}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8313770552096744942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 434837958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7e10b7f1917246b39d420311139881f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trialIndex: 1
+  headAnchored: 1
 --- !u!1 &8424402810629008561 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4411716654070548185, guid: 2a19b9f4c11bb4a719017f891000f6de, type: 3}
@@ -14661,6 +14850,20 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7556785253131490088, guid: 2a19b9f4c11bb4a719017f891000f6de, type: 3}
   m_PrefabInstance: {fileID: 1237020683194544388}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8825839948264526187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8424402810629008561}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7e10b7f1917246b39d420311139881f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trialIndex: 0
+  headAnchored: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -14679,3 +14882,4 @@ SceneRoots:
   - {fileID: 1605832088}
   - {fileID: 1420402253}
   - {fileID: 717485162}
+  - {fileID: 2680118}
