@@ -1376,6 +1376,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81723ab2f238940888d8a99233367640, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sheetDbUrl: 
+  headsetPrefix: PA
   playerId: 0
   oaStation: 000000000000000000000000
   oaMC: 000000000000000000000000
