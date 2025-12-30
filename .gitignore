@@ -103,4 +103,5 @@ InitTestScene*.unity*
 
 # Unity Burst
 [Bb]urstDebugInformation*/
+*_BurstDebugInformation_DoNotShip/
 UI_AR_BurstDebugInformation_DoNotShip/
