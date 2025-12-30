@@ -24,6 +24,7 @@ public class AppFlowManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+        Debug.Log("AppFlowManager: READY 🎉");
     }
 
     // Helpers 
