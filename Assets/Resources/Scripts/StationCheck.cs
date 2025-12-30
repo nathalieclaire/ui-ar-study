@@ -31,12 +31,16 @@ public class StationCheck : MonoBehaviour
 
         bool correct = (trial.requiredStationTag == myStationTag);
 
-        // ❗ NEW: if wrong station → log station error on the cube
-        if (!correct)
+        // ❗ if wrong station - log ONE station error on the cube (first time only)
+        if (!correct && !trial.stationErrorLogged)
         {
+            trial.stationErrorLogged = true;   // remember that we've logged it
+
             var logger = trial.GetComponent<TrialLogger>();   // Logger is on the Cube
             if (logger != null)
+            {
                 logger.LogStationError();
+            }
         }
 
         if (stationRenderer != null)

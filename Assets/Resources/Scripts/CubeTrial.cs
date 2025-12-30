@@ -5,6 +5,7 @@ public class CubeTrial : MonoBehaviour
     public UIAnchorController anchor;
 
     public bool snappedCorrectly = false;
+    public bool stationErrorLogged;   // has this cube already logged a station error?
     public string requiredStationTag; // "SunStation" or "WaterStation"
     public GameObject symbol;
     public GameObject uiRoot;
