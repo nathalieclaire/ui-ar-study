@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.Networking;   // for UnityWebRequest
+using UnityEngine.Networking;          // for UnityWebRequest
+using System.Text.RegularExpressions; // !!! for extracting number from playerId
 
 public class LoggingManager : MonoBehaviour
 {
@@ -60,20 +61,71 @@ public class LoggingManager : MonoBehaviour
 
     public void BeginNewPlayer()
     {
-        // Each headset keeps its own local counter:
-        // e.g. "LastPlayerNumber_PA" on this device
-        string key = "LastPlayerNumber_" + headsetPrefix;
+        StartCoroutine(BeginNewPlayerRoutine());   // !!! now uses SheetDB, no PlayerPrefs
+    }
 
-        int lastNumber = PlayerPrefs.GetInt(key, 0);  // default 0 if none yet
-        lastNumber++;
-        PlayerPrefs.SetInt(key, lastNumber);
-        PlayerPrefs.Save();
+    // !!! Fetch last playerId from SheetDB, increment, set new playerId
+    private IEnumerator BeginNewPlayerRoutine()
+    {
+        if (string.IsNullOrEmpty(sheetDbUrl))
+        {
+            Debug.LogError("[LOG] sheetDbUrl is empty – cannot fetch last player ID.");
+            yield break;
+        }
 
-        playerId = headsetPrefix + lastNumber;        // e.g. "PA3"
+        // !!! Ask SheetDB for the last row, sorted by playerId
+        string url = sheetDbUrl +
+                     "?sort_by=playerId" +
+                     "&sort_order=desc" +
+                     "&limit=1" +
+                     "&single_object=true";
 
-        ResetAllCounters();
+        using (UnityWebRequest req = UnityWebRequest.Get(url))
+        {
+            yield return req.SendWebRequest();
 
-        Debug.Log($"[LOG] ▶ New Player Started — PlayerID = {playerId}");
+            if (req.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError("[LOG] Failed to GET last playerId from SheetDB: " + req.error);
+                yield break; // !!! no local fallback
+            }
+
+            string json = req.downloadHandler.text;
+            // Example JSON:
+            //  {}                      -> empty sheet
+            //  {"playerId":"PA3",...}  -> last row
+
+            string lastPlayerId = ExtractPlayerIdFromJson(json);   // !!!
+
+            int newNumber = 1;
+            if (!string.IsNullOrEmpty(lastPlayerId) &&
+                lastPlayerId.StartsWith(headsetPrefix))
+            {
+                string numberPart = lastPlayerId.Substring(headsetPrefix.Length);
+                if (int.TryParse(numberPart, out int parsed))
+                {
+                    newNumber = parsed + 1;
+                }
+            }
+
+            playerId = headsetPrefix + newNumber;   // !!! e.g. "PA1" or "PA4"
+
+            ResetAllCounters();
+
+            Debug.Log($"[LOG] ▶ New Player Started — PlayerID = {playerId} (via SheetDB)");
+        }
+    }
+
+    // !!! tiny helper: pull "playerId" from simple JSON
+    private string ExtractPlayerIdFromJson(string json)
+    {
+        if (string.IsNullOrEmpty(json)) return null;
+        // matches: "playerId":"PA3"
+        var match = Regex.Match(json, "\"playerId\"\\s*:\\s*\"([^\"]+)\"");
+        if (match.Success)
+            return match.Groups[1].Value;
+
+        return null;
     }
 
     void ResetAllCounters()
