@@ -1,7 +1,8 @@
-using UnityEngine;
 using System.Collections;
-using UnityEngine.Networking;          // for UnityWebRequest
-using System.Text.RegularExpressions; // !!! for extracting number from playerId
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
+using UnityEngine;
+using UnityEngine.Networking; // UnityWebRequest
 
 public class LoggingManager : MonoBehaviour
 {
@@ -21,7 +22,6 @@ public class LoggingManager : MonoBehaviour
     [Header("Current Player (debug only)")]
     public string playerId = "";          // e.g. "PA3"
 
-
     // ─────────────────────────────────────────────
     //  Error arrays: 3 plants per condition
     // ─────────────────────────────────────────────
@@ -34,6 +34,22 @@ public class LoggingManager : MonoBehaviour
     public int[] haStation = new int[3];
     public int[] haMC      = new int[3];
 
+    // ─────────────────────────────────────────────
+    //  Pending queue (offline safe)
+    // ─────────────────────────────────────────────
+
+    const string PendingKey = "LOG_PENDING_ROWS_V1";
+
+    [System.Serializable]
+    class PendingWrapper
+    {
+        public List<string> rows = new List<string>();
+    }
+
+    List<string> pendingRows = new List<string>();
+
+    [Header("Debug only")]
+    [SerializeField] int pendingCount;
 
     // ─────────────────────────────────────────────
     //  Singleton
@@ -49,22 +65,116 @@ public class LoggingManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
+
+        LoadPendingQueue();
     }
 
+    void LoadPendingQueue()
+    {
+        string json = PlayerPrefs.GetString(PendingKey, "");
+        if (!string.IsNullOrEmpty(json))
+        {
+            try
+            {
+                var wrapper = JsonUtility.FromJson<PendingWrapper>(json);
+                if (wrapper != null && wrapper.rows != null)
+                    pendingRows = wrapper.rows;
+            }
+            catch
+            {
+                pendingRows = new List<string>();
+            }
+        }
+
+        pendingCount = pendingRows.Count;
+        Debug.Log($"[LOG] Loaded pending queue. Rows={pendingCount}");
+    }
+
+    void SavePendingQueue()
+    {
+        var wrapper = new PendingWrapper { rows = pendingRows };
+        string json = JsonUtility.ToJson(wrapper);
+        PlayerPrefs.SetString(PendingKey, json);
+        PlayerPrefs.Save();
+        pendingCount = pendingRows.Count;
+    }
+
+    void EnqueueRow(string jsonBody)
+    {
+        pendingRows.Add(jsonBody);
+        SavePendingQueue();
+        Debug.Log($"[LOG] Enqueued row. Pending now = {pendingRows.Count}");
+    }
+
+    // Public API to manually sync
+    public void SyncPendingNow()
+    {
+        if (!gameObject.activeInHierarchy)
+        {
+            Debug.LogWarning("[LOG] Cannot sync, LoggingManager object inactive.");
+            return;
+        }
+
+        StartCoroutine(SendPendingRoutine());
+    }
+
+    IEnumerator SendPendingRoutine()
+    {
+        if (string.IsNullOrEmpty(sheetDbUrl))
+        {
+            Debug.LogWarning("[LOG] SheetDB URL empty – cannot sync.");
+            yield break;
+        }
+
+        if (pendingRows.Count == 0)
+        {
+            Debug.Log("[LOG] No pending rows to sync.");
+            yield break;
+        }
+
+        Debug.Log($"[LOG] Sync: trying to send {pendingRows.Count} pending rows...");
+
+        int index = 0;
+        while (index < pendingRows.Count)
+        {
+            string body = pendingRows[index];
+
+            using (UnityWebRequest req = new UnityWebRequest(sheetDbUrl, "POST"))
+            {
+                byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(body);
+                req.uploadHandler   = new UploadHandlerRaw(bodyRaw);
+                req.downloadHandler = new DownloadHandlerBuffer();
+                req.SetRequestHeader("Content-Type", "application/json");
+
+                yield return req.SendWebRequest();
+
+                if (req.result == UnityWebRequest.Result.Success)
+                {
+                    Debug.Log("[LOG] Row synced: " + req.downloadHandler.text);
+                    pendingRows.RemoveAt(index);  // list shrinks
+                    SavePendingQueue();           // update PlayerPrefs + pendingCount
+                }
+                else
+                {
+                    Debug.LogWarning("[LOG] Sync failed, keeping row: " + req.error);
+                    index++; // try this row again next time
+                }
+            }
+        }
+
+        Debug.Log($"[LOG] Sync finished. Pending rows left = {pendingRows.Count}");
+    }
 
     // ─────────────────────────────────────────────
     //  Start of experiment  (called from MainMenu)
     // ─────────────────────────────────────────────
-    //
-    //  Call via LoggingButtonBridge.BeginNewPlayer()
-    //
 
     public void BeginNewPlayer()
     {
-        StartCoroutine(BeginNewPlayerRoutine());   // !!! now uses SheetDB, no PlayerPrefs
+        StartCoroutine(BeginNewPlayerRoutine());
     }
 
-    // !!! Fetch last playerId from SheetDB, increment, set new playerId
+    // still uses Google Sheet as source of truth for playerId
     private IEnumerator BeginNewPlayerRoutine()
     {
         if (string.IsNullOrEmpty(sheetDbUrl))
@@ -73,7 +183,6 @@ public class LoggingManager : MonoBehaviour
             yield break;
         }
 
-        // !!! Ask SheetDB for the last row, sorted by playerId
         string url = sheetDbUrl +
                      "?sort_by=playerId" +
                      "&sort_order=desc" +
@@ -87,15 +196,12 @@ public class LoggingManager : MonoBehaviour
             if (req.result != UnityWebRequest.Result.Success)
             {
                 Debug.LogError("[LOG] Failed to GET last playerId from SheetDB: " + req.error);
-                yield break; // !!! no local fallback
+                yield break; // no playerId → don’t start participant
             }
 
             string json = req.downloadHandler.text;
-            // Example JSON:
-            //  {}                      -> empty sheet
-            //  {"playerId":"PA3",...}  -> last row
 
-            string lastPlayerId = ExtractPlayerIdFromJson(json);   // !!!
+            string lastPlayerId = ExtractPlayerIdFromJson(json);
 
             int newNumber = 1;
             if (!string.IsNullOrEmpty(lastPlayerId) &&
@@ -108,7 +214,7 @@ public class LoggingManager : MonoBehaviour
                 }
             }
 
-            playerId = headsetPrefix + newNumber;   // !!! e.g. "PA1" or "PA4"
+            playerId = headsetPrefix + newNumber;
 
             ResetAllCounters();
 
@@ -116,15 +222,12 @@ public class LoggingManager : MonoBehaviour
         }
     }
 
-    // !!! tiny helper: pull "playerId" from simple JSON
     private string ExtractPlayerIdFromJson(string json)
     {
         if (string.IsNullOrEmpty(json)) return null;
-        // matches: "playerId":"PA3"
         var match = Regex.Match(json, "\"playerId\"\\s*:\\s*\"([^\"]+)\"");
         if (match.Success)
             return match.Groups[1].Value;
-
         return null;
     }
 
@@ -136,9 +239,8 @@ public class LoggingManager : MonoBehaviour
         System.Array.Clear(haMC,      0, 3);
     }
 
-
     // ─────────────────────────────────────────────
-    //  Error logging  (called from TrialLogger)
+    //  Error logging (same as before)
     // ─────────────────────────────────────────────
 
     public void AddStationError(int trialIndex, bool headAnchored)
@@ -173,25 +275,16 @@ public class LoggingManager : MonoBehaviour
         }
     }
 
-
     // ─────────────────────────────────────────────
-    //  SESSION SUMMARY + POST OA (Session 1)
-    //  Call from Session1 end button:
-    //   LoggingButtonBridge.SendObjectAnchoredResult()
+    //  OA / HA result → enqueue + (try) sync
     // ─────────────────────────────────────────────
 
     public void SendOAResult()
-    {
-        StartCoroutine(SendOAResultRoutine());
-    }
-
-    IEnumerator SendOAResultRoutine()
     {
         int total =
             oaStation[0] + oaStation[1] + oaStation[2] +
             oaMC[0]      + oaMC[1]      + oaMC[2];
 
-        // 6 values total (3 station + 3 MC)
         float mean = total / 6f;
 
         Debug.Log(
@@ -202,14 +295,6 @@ public class LoggingManager : MonoBehaviour
             $"Total={total}, Mean={mean}"
         );
 
-        if (string.IsNullOrEmpty(sheetDbUrl))
-        {
-            Debug.LogWarning("[LOG] SheetDB URL is empty, skipping OA POST.");
-            yield break;
-        }
-
-        // Google Sheet columns:
-        // playerId | condition | station1 | mc1 | station2 | mc2 | station3 | mc3 | totalErrors | meanError
         string jsonBody =
             "{ \"data\": [ {" +
             $"\"playerId\":\"{playerId}\"," +
@@ -224,39 +309,12 @@ public class LoggingManager : MonoBehaviour
             $"\"meanError\":\"{mean}\"" +
             "} ] }";
 
-        using (UnityWebRequest req = new UnityWebRequest(sheetDbUrl, "POST"))
-        {
-            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonBody);
-            req.uploadHandler   = new UploadHandlerRaw(bodyRaw);
-            req.downloadHandler = new DownloadHandlerBuffer();
-            req.SetRequestHeader("Content-Type", "application/json");
-
-            yield return req.SendWebRequest();
-
-            if (req.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogWarning("[LOG] OA POST failed: " + req.error);
-            }
-            else
-            {
-                Debug.Log("[LOG] OA row sent to SheetDB: " + req.downloadHandler.text);
-            }
-        }
+        EnqueueRow(jsonBody);
+        // try once immediately (if offline it just fails & keeps row)
+        SyncPendingNow();
     }
-
-
-    // ─────────────────────────────────────────────
-    //  SESSION SUMMARY + POST HA (Session 2)
-    //  Call from Session2 end button:
-    //   LoggingButtonBridge.SendHeadAnchoredResult()
-    // ─────────────────────────────────────────────
 
     public void SendHAResult()
-    {
-        StartCoroutine(SendHAResultRoutine());
-    }
-
-    IEnumerator SendHAResultRoutine()
     {
         int total =
             haStation[0] + haStation[1] + haStation[2] +
@@ -272,12 +330,6 @@ public class LoggingManager : MonoBehaviour
             $"Total={total}, Mean={mean}"
         );
 
-        if (string.IsNullOrEmpty(sheetDbUrl))
-        {
-            Debug.LogWarning("[LOG] SheetDB URL is empty, skipping HA POST.");
-            yield break;
-        }
-
         string jsonBody =
             "{ \"data\": [ {" +
             $"\"playerId\":\"{playerId}\"," +
@@ -292,23 +344,7 @@ public class LoggingManager : MonoBehaviour
             $"\"meanError\":\"{mean}\"" +
             "} ] }";
 
-        using (UnityWebRequest req = new UnityWebRequest(sheetDbUrl, "POST"))
-        {
-            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonBody);
-            req.uploadHandler   = new UploadHandlerRaw(bodyRaw);
-            req.downloadHandler = new DownloadHandlerBuffer();
-            req.SetRequestHeader("Content-Type", "application/json");
-
-            yield return req.SendWebRequest();
-
-            if (req.result != UnityWebRequest.Result.Success)
-            {
-                Debug.LogWarning("[LOG] HA POST failed: " + req.error);
-            }
-            else
-            {
-                Debug.Log("[LOG] HA row sent to SheetDB: " + req.downloadHandler.text);
-            }
-        }
+        EnqueueRow(jsonBody);
+        SyncPendingNow();
     }
 }

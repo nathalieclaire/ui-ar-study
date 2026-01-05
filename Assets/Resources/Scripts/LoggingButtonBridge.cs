@@ -16,4 +16,9 @@ public class LoggingButtonBridge : MonoBehaviour
     {
         LoggingManager.Instance?.SendHAResult();
     }
+
+    public void SyncPendingNow()
+    {
+        LoggingManager.Instance?.SyncPendingNow();
+    }
 }
