@@ -4,30 +4,33 @@ using UnityEngine.UI;
 
 public class SceneFlowManager : MonoBehaviour
 {
-    public enum Phase { OA, HA }
+    public enum Phase { Onboarding, OA, HA }
 
     [Header("Stations (assign in Inspector)")]
     public GameObject sunStation;
     public GameObject waterStation;
 
+    [Header("Onboarding")]
+    public CubeTrial onboardingCube;                 // Onboarding_cube (CubeTrial)
+    public Transform onboardingWorldUIAnchor;        // PlantAnchorTarget/World_onboarding_UI_anchor
+    public Transform onboardingCubeUIAnchor;         // Onboarding_cube/Cube_onboarding_UI_anchor
+
     [Header("Cubes per phase")]
     public CubeTrial[] oaCubes;   // Cube_blue_OA, Cube_green_OA, Cube_grey_OA
     public CubeTrial[] haCubes;   // Cube_blue_HA, Cube_green_HA, Cube_grey_HA
 
-    [Header("Progress")]
+    [Header("Progress (OA/HA only)")]
     public int totalPlants = 3;
 
     private int snappedCorrectCount = 0;
-    private Phase currentPhase = Phase.OA;
+    private Phase currentPhase = Phase.Onboarding;
 
     private CubeTrial active;
     private CubeTrial lastCompletedTrial;
 
-    // ---------------- PHASE CONTROL ----------------
-
     void Start()
     {
-        SetPhase(Phase.OA);   // start in OA condition
+        SetPhase(Phase.Onboarding);
     }
 
     void SetPhase(Phase phase)
@@ -37,13 +40,22 @@ public class SceneFlowManager : MonoBehaviour
         active = null;
         lastCompletedTrial = null;
 
-        bool oaOn = (phase == Phase.OA);
+        // Turn sets on/off
+        if (onboardingCube != null)
+            onboardingCube.gameObject.SetActive(phase == Phase.Onboarding);
 
-        // toggle whole sets
-        ToggleCubeSet(oaCubes, oaOn);
-        ToggleCubeSet(haCubes, !oaOn);
+        ToggleCubeSet(oaCubes, phase == Phase.OA);
+        ToggleCubeSet(haCubes, phase == Phase.HA);
 
-        Debug.Log($"[SceneFlow] Switched phase → {currentPhase}, OA active = {oaOn}");
+        // Hide stations at phase start
+        if (sunStation != null) sunStation.SetActive(false);
+        if (waterStation != null) waterStation.SetActive(false);
+
+        // Onboarding: mount UI to WORLD anchor immediately (so it isn't stuck at 0,0,0)
+        if (phase == Phase.Onboarding)
+            MountOnboardingUIToWorld();
+
+        Debug.Log($"[SceneFlow] Switched phase → {currentPhase}");
     }
 
     void ToggleCubeSet(CubeTrial[] set, bool on)
@@ -53,35 +65,50 @@ public class SceneFlowManager : MonoBehaviour
         foreach (var c in set)
         {
             if (c == null) continue;
+
             c.gameObject.SetActive(on);
 
-            // simple safety: re-enable collider when we turn it on
             var col = c.GetComponent<Collider>();
             if (col != null) col.enabled = on;
+
+            // also ensure UI is hidden when disabling
+            if (!on && c.uiRoot != null)
+                c.uiRoot.SetActive(false);
         }
     }
 
-    // called by DONE button on the *last OA cube* (its uiDone)
+    // --- Button hooks ---
+
+    // Hook this to onboarding "DONE" button
+    public void OnOnboardingDone()
+    {
+        Debug.Log("[SceneFlow] Onboarding finished → switching to OA.");
+        SetPhase(Phase.OA);
+    }
+
+    // Hook this to the DONE button of the last OA cube
     public void OnOADoneButton()
     {
         Debug.Log("[SceneFlow] OA phase finished → switching to HA.");
 
-        // fade out last OA cube if present
         if (lastCompletedTrial != null)
             StartCoroutine(FadeOutAndDisableCube(lastCompletedTrial));
 
-        // make sure all OA cubes are off
         ToggleCubeSet(oaCubes, false);
-
-        // now enable HA cubes and restart counting
         SetPhase(Phase.HA);
     }
 
-    // ---------------- STATION & UI LOGIC ----------------
+    // --- Core events ---
 
     // called by StationCheck when a cube snaps correctly
     public void OnPlantSnappedCorrectly()
     {
+        // Onboarding: when it snaps, re-parent UI from world anchor to cube anchor
+        if (currentPhase == Phase.Onboarding && active == onboardingCube)
+        {
+            SwitchOnboardingUIToCube();
+        }
+
         snappedCorrectCount++;
         Debug.Log($"[SceneFlow] {currentPhase} snap count = {snappedCorrectCount}/{totalPlants}");
     }
@@ -145,38 +172,35 @@ public class SceneFlowManager : MonoBehaviour
 
         trial.gameObject.SetActive(false);
 
-        // make sure its UI disappears too
         if (trial.uiRoot != null)
             trial.uiRoot.SetActive(false);
     }
 
-    // after correct answer on UI4: go to UI5 or UI6 (uiDone)
     void OnCorrectAnswered()
     {
         if (active == null) return;
 
         active.uiPage4?.SetActive(false);
+        lastCompletedTrial = active;
 
-        lastCompletedTrial = active;   // remember cube for UI5 / UI6, and for fade-out
-        Debug.Log($"[SceneFlow] OnCorrectAnswered in phase {currentPhase}, snapCount={snappedCorrectCount}");
-
-        if (snappedCorrectCount < totalPlants)
+        if (currentPhase == Phase.Onboarding)
         {
-            // not the last plant in this phase → show UI5
-            active.uiPage5?.SetActive(true);
+            // Onboarding: always go straight to DONE (no UI5)
+            active.uiDone?.SetActive(true);
         }
         else
         {
-            // last plant in this phase → show DONE page
-            active.uiDone?.SetActive(true);
+            // OA/HA: UI5 until last plant, then DONE
+            if (snappedCorrectCount < totalPlants)
+                active.uiPage5?.SetActive(true);
+            else
+                active.uiDone?.SetActive(true);
         }
 
         active = null;
     }
 
-    // ----------------------------------------------------
-    // TRIAL FLOW
-    // ----------------------------------------------------
+    // --- Trial flow ---
 
     public void StartTrial(CubeTrial trial)
     {
@@ -194,11 +218,45 @@ public class SceneFlowManager : MonoBehaviour
             if (col != null) col.enabled = false;
         }
 
-        active.anchor.Mount();   // decides OA vs HA (UIAnchorController)
+        // Mount UI
+        if (active.anchor != null)
+        {
+            if (currentPhase == Phase.Onboarding)
+            {
+                // ensure it's mounted to WORLD anchor at the start of onboarding interaction
+                MountOnboardingUIToWorld();
+            }
+            else
+            {
+                active.anchor.Mount(); // OA/HA behavior unchanged
+            }
+        }
+
         ShowPage1();
     }
 
-    // note - in Unity editor: Set uiRoot inactive by default.
+    void MountOnboardingUIToWorld()
+    {
+        if (onboardingCube == null || onboardingCube.anchor == null) return;
+        if (onboardingWorldUIAnchor == null) return;
+
+        onboardingCube.anchor.headAnchored = false;
+        onboardingCube.anchor.objectAnchor = onboardingWorldUIAnchor;
+        onboardingCube.anchor.Mount();
+    }
+
+    void SwitchOnboardingUIToCube()
+    {
+        if (onboardingCube == null || onboardingCube.anchor == null) return;
+        if (onboardingCubeUIAnchor == null) return;
+
+        onboardingCube.anchor.headAnchored = false;
+        onboardingCube.anchor.objectAnchor = onboardingCubeUIAnchor;
+        onboardingCube.anchor.Mount();
+    }
+
+    // --- UI pages ---
+
     public void ShowPage1()
     {
         if (active == null) return;
@@ -253,7 +311,6 @@ public class SceneFlowManager : MonoBehaviour
 
         StartCoroutine(FadeOutAndDisableCube(lastCompletedTrial));
 
-        // re-enable other cubes in this phase
         foreach (var cube in GameObject.FindGameObjectsWithTag("Cube"))
         {
             var col = cube.GetComponent<Collider>();
