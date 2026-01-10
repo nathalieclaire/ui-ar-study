@@ -1475,6 +1475,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bb694ee852d046ffb551631006202c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  calibrationManager: {fileID: 1622999071}
   sunStation: {fileID: 1420402249}
   waterStation: {fileID: 1605832081}
   onboardingCube: {fileID: 585980590}
@@ -7855,7 +7856,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 555301290}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1622999071}
+        m_TargetAssemblyTypeName: AnchorCalibrationManager, Assembly-CSharp
+        m_MethodName: DoneCalibration
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &555301290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17926,7 +17939,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1259797599}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1622999071}
+        m_TargetAssemblyTypeName: AnchorCalibrationManager, Assembly-CSharp
+        m_MethodName: ResetCalibration
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1259797599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24866,7 +24891,7 @@ GameObject:
   - component: {fileID: 1622999072}
   - component: {fileID: 1622999071}
   m_Layer: 0
-  m_Name: AnchorApplier
+  m_Name: AnchorCalibrationManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24881,12 +24906,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1622999070}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 92ed77695fc37484687f65418aea130b, type: 3}
+  m_Script: {fileID: 11500000, guid: dda8e308cab4145bda5442056c73f882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  plantTarget: {fileID: 454050949}
-  waterTarget: {fileID: 633196350}
-  sunTarget: {fileID: 235198199}
+  plantCalibCube: {fileID: 29275961}
+  waterCalibCube: {fileID: 2060226976}
+  sunCalibCube: {fileID: 1953835739}
+  plantAnchorTarget: {fileID: 454050949}
+  waterAnchorTarget: {fileID: 633196350}
+  sunAnchorTarget: {fileID: 235198199}
+  calibrationUIRoot: {fileID: 2111060965}
+  yawOnly: 1
 --- !u!4 &1622999072
 Transform:
   m_ObjectHideFlags: 0
@@ -34208,7 +34238,7 @@ SceneRoots:
   - {fileID: 633196350}
   - {fileID: 235198199}
   - {fileID: 454050949}
-  - {fileID: 1622999072}
   - {fileID: 29275961}
   - {fileID: 2060226976}
   - {fileID: 1953835739}
+  - {fileID: 1622999072}
