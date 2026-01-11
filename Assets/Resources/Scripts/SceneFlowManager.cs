@@ -7,16 +7,16 @@ public class SceneFlowManager : MonoBehaviour
     public enum Phase { Onboarding, OA, HA }
 
     [Header("Calibration")]
-    public AnchorCalibrationManager calibrationManager; // drag in Inspector
+    public AnchorCalibrationManager calibrationManager; // assign in Inspector
 
     [Header("Stations (assign in Inspector)")]
     public GameObject sunStation;
     public GameObject waterStation;
 
     [Header("Onboarding")]
-    public CubeTrial onboardingCube;                 // Onboarding_cube (CubeTrial)
-    public Transform onboardingWorldUIAnchor;        // PlantAnchorTarget/World_onboarding_UI_anchor
-    public Transform onboardingCubeUIAnchor;         // Onboarding_cube/Cube_onboarding_UI_anchor
+    public CubeTrial onboardingCube;
+    public Transform onboardingWorldUIAnchor;
+    public Transform onboardingCubeUIAnchor;
 
     [Header("Cubes per phase")]
     public CubeTrial[] oaCubes;
@@ -33,19 +33,12 @@ public class SceneFlowManager : MonoBehaviour
 
     void Start()
     {
-        // Start locked behind calibration
         DisableAllTrialContent();
 
         if (calibrationManager != null)
-        {
             calibrationManager.CalibrationFinished += BeginAfterCalibration;
-        }
         else
-        {
-            // If you forgot to assign it, don't block the whole app
-            Debug.LogWarning("[SceneFlow] No calibrationManager assigned → starting onboarding anyway.");
-            BeginAfterCalibration();
-        }
+            Debug.LogWarning("[SceneFlow] No calibrationManager assigned. Calibration won't gate onboarding.");
     }
 
     void OnDestroy()
@@ -76,22 +69,17 @@ public class SceneFlowManager : MonoBehaviour
         active = null;
         lastCompletedTrial = null;
 
-        // Turn sets on/off
         if (onboardingCube != null)
             onboardingCube.gameObject.SetActive(phase == Phase.Onboarding);
 
         ToggleCubeSet(oaCubes, phase == Phase.OA);
         ToggleCubeSet(haCubes, phase == Phase.HA);
 
-        // Hide stations at phase start
         if (sunStation != null) sunStation.SetActive(false);
         if (waterStation != null) waterStation.SetActive(false);
 
-        // Onboarding: mount UI to WORLD anchor immediately (so it isn't stuck at 0,0,0)
         if (phase == Phase.Onboarding)
             MountOnboardingUIToWorld();
-
-        Debug.Log($"[SceneFlow] Switched phase → {currentPhase}");
     }
 
     void ToggleCubeSet(CubeTrial[] set, bool on)
@@ -112,18 +100,13 @@ public class SceneFlowManager : MonoBehaviour
         }
     }
 
-    // Hook this to onboarding "DONE" button
     public void OnOnboardingDone()
     {
-        Debug.Log("[SceneFlow] Onboarding finished → switching to OA.");
         SetPhase(Phase.OA);
     }
 
-    // Hook this to the DONE button of the last OA cube
     public void OnOADoneButton()
     {
-        Debug.Log("[SceneFlow] OA phase finished → switching to HA.");
-
         if (lastCompletedTrial != null)
             StartCoroutine(FadeOutAndDisableCube(lastCompletedTrial));
 
@@ -131,17 +114,12 @@ public class SceneFlowManager : MonoBehaviour
         SetPhase(Phase.HA);
     }
 
-    // called by StationCheck when a cube snaps correctly
     public void OnPlantSnappedCorrectly()
     {
-        // Onboarding: when it snaps, re-parent UI from world anchor to cube anchor
         if (currentPhase == Phase.Onboarding && active == onboardingCube)
-        {
             SwitchOnboardingUIToCube();
-        }
 
         snappedCorrectCount++;
-        Debug.Log($"[SceneFlow] {currentPhase} snap count = {snappedCorrectCount}/{totalPlants}");
     }
 
     public void AnswerWrong(Button button)
@@ -196,14 +174,11 @@ public class SceneFlowManager : MonoBehaviour
                     }
                 }
             }
-
             yield return null;
         }
 
         trial.gameObject.SetActive(false);
-
-        if (trial.uiRoot != null)
-            trial.uiRoot.SetActive(false);
+        if (trial.uiRoot != null) trial.uiRoot.SetActive(false);
     }
 
     void OnCorrectAnswered()
@@ -215,7 +190,7 @@ public class SceneFlowManager : MonoBehaviour
 
         if (currentPhase == Phase.Onboarding)
         {
-            active.uiDone?.SetActive(true); // no UI5 in onboarding
+            active.uiDone?.SetActive(true);
         }
         else
         {
@@ -230,15 +205,13 @@ public class SceneFlowManager : MonoBehaviour
 
     public void StartTrial(CubeTrial trial)
     {
-        if (active != null) return;
-        if (trial == null) return;
+        if (active != null || trial == null) return;
 
         active = trial;
 
         foreach (var cube in GameObject.FindGameObjectsWithTag("Cube"))
         {
             if (cube == active.gameObject) continue;
-
             var col = cube.GetComponent<Collider>();
             if (col != null) col.enabled = false;
         }

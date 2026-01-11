@@ -14,10 +14,16 @@ public class AnchorCalibrationManager : MonoBehaviour
     public Transform sunAnchorTarget;   // SunAnchorTarget
 
     [Header("Calibration UI root (contains Done/Reset buttons)")]
-    public GameObject calibrationUIRoot;
+    public GameObject calibrationUIRoot; // Calibration_UI (GameObject)
+
+    [Header("Head UI distance (same as main menu)")]
+    public float uiDistance = 0.5f;
 
     [Header("Optional: force horizontal rotation only (yaw)")]
     public bool yawOnly = true;
+
+    // DO NOT assign in Inspector anymore (avoids dragging pain)
+    UIAnchorController calibrationUIAnchor;
 
     // store editor defaults so Reset() can restore them
     Vector3 plantCubePos0, waterCubePos0, sunCubePos0;
@@ -31,12 +37,19 @@ public class AnchorCalibrationManager : MonoBehaviour
     void Awake()
     {
         CacheDefaults();
-    }
 
-    void Start()
-    {
-        // Always start in calibration mode when the scene loads
-        EnterCalibrationMode();
+        // auto-find the UIAnchorController on the Calibration_UI object
+        if (calibrationUIRoot != null)
+        {
+            calibrationUIAnchor = calibrationUIRoot.GetComponent<UIAnchorController>();
+
+            // start hidden until StartCalibration() is called from Main Menu
+            calibrationUIRoot.SetActive(false);
+        }
+        else
+        {
+            Debug.LogWarning("[AnchorCalibration] calibrationUIRoot is not assigned.");
+        }
     }
 
     void CacheDefaults()
@@ -50,13 +63,30 @@ public class AnchorCalibrationManager : MonoBehaviour
         if (sunAnchorTarget != null)   { sunTargetPos0   = sunAnchorTarget.position;   sunTargetRot0   = sunAnchorTarget.rotation; }
     }
 
-    void EnterCalibrationMode()
+    // Hook Main Menu "Start Session" button to THIS
+    public void StartCalibration()
     {
+        // Show UI
         if (calibrationUIRoot != null)
             calibrationUIRoot.SetActive(true);
 
-        // IMPORTANT: we don't auto-apply anything on entry.
-        // You manually place the cubes, then press Done.
+        // Head-anchor UI via UIAnchorController
+        if (calibrationUIAnchor != null)
+        {
+            calibrationUIAnchor.headAnchored = true;
+            calibrationUIAnchor.Mount();
+
+            // enforce distance
+            if (calibrationUIAnchor.uiRoot != null)
+                calibrationUIAnchor.uiRoot.localPosition = new Vector3(0f, 0f, uiDistance);
+        }
+        else
+        {
+            Debug.LogWarning("[AnchorCalibration] No UIAnchorController found on calibrationUIRoot.");
+        }
+
+        // Optional: reset cubes every time you start calibration
+        ResetCalibration();
     }
 
     // Hook this to the "Reset" button
@@ -67,7 +97,7 @@ public class AnchorCalibrationManager : MonoBehaviour
         if (waterCalibCube != null) waterCalibCube.SetPositionAndRotation(waterCubePos0, waterCubeRot0);
         if (sunCalibCube != null)   sunCalibCube.SetPositionAndRotation(sunCubePos0,   sunCubeRot0);
 
-        // also reset targets back to their editor defaults (optional but usually what you want)
+        // reset targets back to their editor defaults
         if (plantAnchorTarget != null) plantAnchorTarget.SetPositionAndRotation(plantTargetPos0, plantTargetRot0);
         if (waterAnchorTarget != null) waterAnchorTarget.SetPositionAndRotation(waterTargetPos0, waterTargetRot0);
         if (sunAnchorTarget != null)   sunAnchorTarget.SetPositionAndRotation(sunTargetPos0,   sunTargetRot0);
@@ -93,6 +123,7 @@ public class AnchorCalibrationManager : MonoBehaviour
         Vector3 pos = cube.position;
         Quaternion rot = cube.rotation;
 
+        // "Yaw only" = keep upright, only rotate around Y axis (good!)
         if (yawOnly)
         {
             float yaw = rot.eulerAngles.y;
