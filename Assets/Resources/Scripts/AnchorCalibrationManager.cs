@@ -22,7 +22,7 @@ public class AnchorCalibrationManager : MonoBehaviour
     [Header("Optional: force horizontal rotation only (yaw)")]
     public bool yawOnly = true;
 
-    // DO NOT assign in Inspector anymore (avoids dragging pain)
+    // auto-found (no Inspector dragging)
     UIAnchorController calibrationUIAnchor;
 
     // store editor defaults so Reset() can restore them
@@ -38,18 +38,18 @@ public class AnchorCalibrationManager : MonoBehaviour
     {
         CacheDefaults();
 
-        // auto-find the UIAnchorController on the Calibration_UI object
         if (calibrationUIRoot != null)
         {
             calibrationUIAnchor = calibrationUIRoot.GetComponent<UIAnchorController>();
-
-            // start hidden until StartCalibration() is called from Main Menu
             calibrationUIRoot.SetActive(false);
         }
         else
         {
             Debug.LogWarning("[AnchorCalibration] calibrationUIRoot is not assigned.");
         }
+
+        // Calibration cubes should be visible at scene start
+        SetCalibrationCubesVisible(true);
     }
 
     void CacheDefaults()
@@ -63,47 +63,47 @@ public class AnchorCalibrationManager : MonoBehaviour
         if (sunAnchorTarget != null)   { sunTargetPos0   = sunAnchorTarget.position;   sunTargetRot0   = sunAnchorTarget.rotation; }
     }
 
-    // Hook Main Menu "Start Session" button to THIS
+    // ─────────────────────────────────────────────────────────────
+    // ENTRY POINT (called from SessionBootstrap / scene start)
+    // ─────────────────────────────────────────────────────────────
+
     public void StartCalibration()
     {
-        // Show UI
+        // ensure cubes are visible when calibration starts
+        SetCalibrationCubesVisible(true);
+
         if (calibrationUIRoot != null)
             calibrationUIRoot.SetActive(true);
 
-        // Head-anchor UI via UIAnchorController
         if (calibrationUIAnchor != null)
         {
             calibrationUIAnchor.headAnchored = true;
             calibrationUIAnchor.Mount();
 
-            // enforce distance
             if (calibrationUIAnchor.uiRoot != null)
                 calibrationUIAnchor.uiRoot.localPosition = new Vector3(0f, 0f, uiDistance);
         }
-        else
-        {
-            Debug.LogWarning("[AnchorCalibration] No UIAnchorController found on calibrationUIRoot.");
-        }
 
-        // Optional: reset cubes every time you start calibration
         ResetCalibration();
     }
 
-    // Hook this to the "Reset" button
+    // ─────────────────────────────────────────────────────────────
+    // UI BUTTONS
+    // ─────────────────────────────────────────────────────────────
+
+    // Hook to RESET button
     public void ResetCalibration()
     {
-        // put cubes back to their start pose
         if (plantCalibCube != null) plantCalibCube.SetPositionAndRotation(plantCubePos0, plantCubeRot0);
         if (waterCalibCube != null) waterCalibCube.SetPositionAndRotation(waterCubePos0, waterCubeRot0);
         if (sunCalibCube != null)   sunCalibCube.SetPositionAndRotation(sunCubePos0,   sunCubeRot0);
 
-        // reset targets back to their editor defaults
         if (plantAnchorTarget != null) plantAnchorTarget.SetPositionAndRotation(plantTargetPos0, plantTargetRot0);
         if (waterAnchorTarget != null) waterAnchorTarget.SetPositionAndRotation(waterTargetPos0, waterTargetRot0);
         if (sunAnchorTarget != null)   sunAnchorTarget.SetPositionAndRotation(sunTargetPos0,   sunTargetRot0);
     }
 
-    // Hook this to the "Done" button
+    // Hook to DONE button
     public void DoneCalibration()
     {
         ApplyCubeToTarget(plantCalibCube, plantAnchorTarget);
@@ -113,8 +113,15 @@ public class AnchorCalibrationManager : MonoBehaviour
         if (calibrationUIRoot != null)
             calibrationUIRoot.SetActive(false);
 
+        // 🔒 hide calibration cubes completely
+        SetCalibrationCubesVisible(false);
+
         CalibrationFinished?.Invoke();
     }
+
+    // ─────────────────────────────────────────────────────────────
+    // INTERNALS
+    // ─────────────────────────────────────────────────────────────
 
     void ApplyCubeToTarget(Transform cube, Transform target)
     {
@@ -123,7 +130,7 @@ public class AnchorCalibrationManager : MonoBehaviour
         Vector3 pos = cube.position;
         Quaternion rot = cube.rotation;
 
-        // "Yaw only" = keep upright, only rotate around Y axis (good!)
+        // keep upright (yaw only)
         if (yawOnly)
         {
             float yaw = rot.eulerAngles.y;
@@ -131,5 +138,12 @@ public class AnchorCalibrationManager : MonoBehaviour
         }
 
         target.SetPositionAndRotation(pos, rot);
+    }
+
+    void SetCalibrationCubesVisible(bool visible)
+    {
+        if (plantCalibCube != null) plantCalibCube.gameObject.SetActive(visible);
+        if (waterCalibCube != null) waterCalibCube.gameObject.SetActive(visible);
+        if (sunCalibCube != null)   sunCalibCube.gameObject.SetActive(visible);
     }
 }
