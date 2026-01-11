@@ -6365,7 +6365,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c4e0cce262e204944bf6f60bd2795377, type: 3}
       propertyPath: m_Name
-      value: uploads_files_1032535_small+plant+3
+      value: pot
       objectReference: {fileID: 0}
     - target: {fileID: 8442510506162454399, guid: c4e0cce262e204944bf6f60bd2795377, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -6975,7 +6975,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: a3bcf4f67ea5446ba9fbadae4955ca25, type: 2}
     - target: {fileID: 919132149155446097, guid: 50b8450556eab4b33b5161103caa6b86, type: 3}
       propertyPath: m_Name
-      value: uploads_files_3984303_Moth+Orchids
+      value: moth_orchid
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -7466,7 +7466,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: a643176db3c58499eb9d81d847d0df2c, type: 2}
     - target: {fileID: 919132149155446097, guid: 42147caa2132140c4b086de3ff6e15a4, type: 3}
       propertyPath: m_Name
-      value: Anthurium red cluster
+      value: flamingo_flower
       objectReference: {fileID: 0}
     - target: {fileID: 2561126224895600351, guid: 42147caa2132140c4b086de3ff6e15a4, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -8558,7 +8558,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 580968b19f4394f12aaed568ee9a391a, type: 3}
       propertyPath: m_Name
-      value: CinnamonFern
+      value: cinnamon_fern
       objectReference: {fileID: 0}
     - target: {fileID: 5970255400135708707, guid: 580968b19f4394f12aaed568ee9a391a, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -23211,7 +23211,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 44c220fabaa1548ae9661c7594c8c715, type: 2}
     - target: {fileID: 919132149155446097, guid: bd1caf799270345f2be99dfc678991b1, type: 3}
       propertyPath: m_Name
-      value: Barrel_Cactus_002
+      value: barrel_cactus
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -28286,7 +28286,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 72111d761702546ff831f9e594e4d94d, type: 2}
     - target: {fileID: 919132149155446097, guid: 22d459015c59249578bbfbad7e6ef4a9, type: 3}
       propertyPath: m_Name
-      value: Aloe Vera
+      value: aloe_vera
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -28809,7 +28809,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: dae577458769e442fb2a2bd2f911b49e, type: 2}
     - target: {fileID: 919132149155446097, guid: 23cd68734365a4b1890b35e65db868c7, type: 3}
       propertyPath: m_Name
-      value: uploads_files_3481344_Spiderlily_FBX
+      value: spider_lily
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
