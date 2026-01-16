@@ -6530,7 +6530,7 @@ MonoBehaviour:
   anchor: {fileID: 580650515}
   snappedCorrectly: 0
   stationErrorLogged: 0
-  requiredStationTag: WaterStation
+  requiredStationTag: SunStation
   symbol: {fileID: 565879212}
   uiRoot: {fileID: 520718870}
   uiPage1: {fileID: 1300022910}
@@ -9868,7 +9868,7 @@ MonoBehaviour:
   anchor: {fileID: 837375363}
   snappedCorrectly: 0
   stationErrorLogged: 0
-  requiredStationTag: SunStation
+  requiredStationTag: WaterStation
   symbol: {fileID: 922443473}
   uiRoot: {fileID: 1839572282}
   uiPage1: {fileID: 1831973630}
@@ -27398,7 +27398,7 @@ MonoBehaviour:
   anchor: {fileID: 7783684915861206710}
   snappedCorrectly: 0
   stationErrorLogged: 0
-  requiredStationTag: SunStation
+  requiredStationTag: WaterStation
   symbol: {fileID: 681902206}
   uiRoot: {fileID: 2035208545}
   uiPage1: {fileID: 1777118247}
