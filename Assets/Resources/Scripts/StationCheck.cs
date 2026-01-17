@@ -1,21 +1,41 @@
 using UnityEngine;
-
 using System.Collections;
+using System.Collections.Generic;
 
 public class StationCheck : MonoBehaviour
 {
     public string myStationTag;               // "WaterStation" or "SunStation"
-    public Transform snapPoint;               // assign SnapPoint here
+    public Transform snapPoint;
     public Renderer stationRenderer;
+
+    [Header("Flash Colors")]
     public Color okColor = Color.green;
     public Color wrongColor = Color.red;
 
+    [Header("Flash Timing")]
+    public float flashFadeDuration = 0.15f;
+    public float flashHoldDuration = 0.25f;
+
+    [Header("Flash Cooldowns (per plant)")]
+    public float wrongFlashCooldown = 5f;
+    public float okFlashCooldown = 1.5f;
+
     SceneFlowManager flow;
+    Color originalColor;
+    Coroutine flashRoutine;
+
+    // cooldown tracking per plant
+    readonly Dictionary<int, float> wrongFlashNextAllowed = new();
+    readonly Dictionary<int, float> okFlashNextAllowed = new();
 
     void Start()
     {
         flow = FindFirstObjectByType<SceneFlowManager>();
-        if (stationRenderer == null) stationRenderer = GetComponentInChildren<Renderer>();
+        if (stationRenderer == null)
+            stationRenderer = GetComponentInChildren<Renderer>();
+
+        if (stationRenderer != null)
+            originalColor = stationRenderer.material.color;
     }
 
     void OnTriggerEnter(Collider other)
@@ -25,60 +45,108 @@ public class StationCheck : MonoBehaviour
         var trial = other.GetComponentInParent<CubeTrial>();
         if (trial == null) return;
         if (flow.GetActiveTrial() != trial) return;
-
-        // ignore if this cube already snapped correctly
         if (trial.snappedCorrectly) return;
 
         bool correct = (trial.requiredStationTag == myStationTag);
-
-        // ❗ if wrong station - log ONE station error on the cube (first time only)
-        if (!correct && !trial.stationErrorLogged)
-        {
-            trial.stationErrorLogged = true;   // remember that we've logged it
-
-            var logger = trial.GetComponent<TrialLogger>();   // Logger is on the Cube
-            if (logger != null)
-            {
-                logger.LogStationError();
-            }
-        }
-
-        if (stationRenderer != null)
-            stationRenderer.material.color = correct ? okColor : wrongColor;
+        int id = trial.GetInstanceID();
+        float now = Time.time;
 
         if (correct)
+        {
+            // cooldown for GREEN flash
+            if (!okFlashNextAllowed.TryGetValue(id, out float nextOk) || now >= nextOk)
+            {
+                okFlashNextAllowed[id] = now + okFlashCooldown;
+                TriggerFlash(okColor);
+            }
+
             StartCoroutine(SnapWhenReleased(trial));
+            return;
+        }
+
+        // WRONG station logic
+        if (!trial.stationErrorLogged)
+        {
+            trial.stationErrorLogged = true;
+            var logger = trial.GetComponent<TrialLogger>();
+            if (logger != null) logger.LogStationError();
+        }
+
+        // cooldown for RED flash
+        if (!wrongFlashNextAllowed.TryGetValue(id, out float nextWrong) || now >= nextWrong)
+        {
+            wrongFlashNextAllowed[id] = now + wrongFlashCooldown;
+            TriggerFlash(wrongColor);
+        }
+    }
+
+    void TriggerFlash(Color targetColor)
+    {
+        if (stationRenderer == null) return;
+
+        // safety: if material changed at runtime, refresh baseline
+        originalColor = stationRenderer.material.color;
+
+        if (flashRoutine != null)
+            StopCoroutine(flashRoutine);
+
+        flashRoutine = StartCoroutine(FlashRoutine(targetColor));
+    }
+
+    IEnumerator FlashRoutine(Color target)
+    {
+        yield return FadeColor(originalColor, target, flashFadeDuration);
+        yield return new WaitForSeconds(flashHoldDuration);
+        yield return FadeColor(target, originalColor, flashFadeDuration);
+    }
+
+    IEnumerator FadeColor(Color from, Color to, float duration)
+    {
+        if (stationRenderer == null) yield break;
+
+        if (duration <= 0f)
+        {
+            stationRenderer.material.color = to;
+            yield break;
+        }
+
+        float t = 0f;
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            stationRenderer.material.color = Color.Lerp(from, to, t / duration);
+            yield return null;
+        }
+
+        stationRenderer.material.color = to;
     }
 
     IEnumerator SnapWhenReleased(CubeTrial trial)
     {
-        // if another coroutine already claimed it, stop
         if (trial.snappedCorrectly) yield break;
 
         var grab = trial.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
-        // wait until user releases
         while (grab != null && grab.isSelected)
             yield return null;
 
-        // ADD THIS LINE TO PREVENT MULTIPLE COROUTINES FROM SNAPPING THE SAME TRIAL (re-check after waiting)
         if (trial.snappedCorrectly) yield break;
 
-        // snap
         if (snapPoint != null)
-        {
             trial.transform.SetPositionAndRotation(snapPoint.position, snapPoint.rotation);
-        }
 
-        // disable symbol visibility checking so it can’t re-trigger UI 3
         var symbol = trial.symbol?.GetComponent<SymbolVisibilitySuccess>();
         if (symbol != null) symbol.enabled = false;
 
-        trial.snappedCorrectly = true; // mark as snapped correctly so it doesn't re-trigger
+        trial.snappedCorrectly = true;
+
+        // reset cooldown tracking once success is locked in
+        int id = trial.GetInstanceID();
+        wrongFlashNextAllowed.Remove(id);
+        okFlashNextAllowed.Remove(id);
 
         flow.OnPlantSnappedCorrectly();
         flow.ShowPage4();
 
-        // freeze it in place
         var rb = trial.GetComponent<Rigidbody>();
         if (rb != null)
         {
@@ -87,10 +155,8 @@ public class StationCheck : MonoBehaviour
             rb.isKinematic = true;
         }
 
-        // prevent re-grabbing
         if (grab != null) grab.enabled = false;
 
-        // optional: parent it to the station so it stays
         trial.transform.SetParent(transform, true);
     }
 }

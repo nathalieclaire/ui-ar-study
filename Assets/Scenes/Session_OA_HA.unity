@@ -124,6 +124,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: 7cf3ac7bcd2e5471fb54d5f5da9aad56, type: 3}
   m_PrefabInstance: {fileID: 1869611420}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &8983646 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6589126927893049898, guid: 6ad7434be7212414ea46f5a5f9a98e0c, type: 3}
+  m_PrefabInstance: {fileID: 533331530}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &11821115
 GameObject:
   m_ObjectHideFlags: 0
@@ -9047,6 +9052,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: ee01ac8875a1f439ab596cef1f860005, type: 3}
   m_PrefabInstance: {fileID: 2124582690}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &728927131 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6589126927893049898, guid: 6ad7434be7212414ea46f5a5f9a98e0c, type: 3}
+  m_PrefabInstance: {fileID: 609380838}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &730769970
 GameObject:
   m_ObjectHideFlags: 0
@@ -17871,9 +17881,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myStationTag: SunStation
   snapPoint: {fileID: 1105801844}
-  stationRenderer: {fileID: 1420402251}
+  stationRenderer: {fileID: 728927131}
   okColor: {r: 0, g: 1, b: 0, a: 1}
   wrongColor: {r: 1, g: 0, b: 0, a: 1}
+  flashFadeTime: 0.25
+  flashHoldTime: 0.5
 --- !u!65 &1420402255
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21408,9 +21420,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myStationTag: WaterStation
   snapPoint: {fileID: 226762110}
-  stationRenderer: {fileID: 1605832086}
+  stationRenderer: {fileID: 8983646}
   okColor: {r: 0, g: 1, b: 0, a: 1}
   wrongColor: {r: 1, g: 0, b: 0, a: 1}
+  flashFadeTime: 0.25
+  flashHoldTime: 0.5
 --- !u!65 &1605832090
 BoxCollider:
   m_ObjectHideFlags: 0
