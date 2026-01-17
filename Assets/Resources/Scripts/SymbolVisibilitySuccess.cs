@@ -5,7 +5,10 @@ public class SymbolVisibilitySuccess : MonoBehaviour
     public SceneFlowManager flow;
     public float secondsNeeded = 3f;
 
+    [Header("Visuals")]
+    [Tooltip("Renderer on the CHILD object (e.g. drop-lowpoly) to change mat")]
     public Renderer symbolRenderer;
+
     public Color idleColor = Color.red;
     public Color detectedColor = Color.green;
 
@@ -19,14 +22,18 @@ public class SymbolVisibilitySuccess : MonoBehaviour
         done = false;
         isVisible = false;
 
+        // If not assigned manually, try to find a Renderer in children
         if (symbolRenderer == null)
-            symbolRenderer = GetComponent<Renderer>();
+            symbolRenderer = GetComponentInChildren<Renderer>();
 
         if (symbolRenderer != null)
             symbolRenderer.material.color = idleColor;
     }
 
-    void OnBecameVisible() { isVisible = true; }
+    void OnBecameVisible()
+    {
+        isVisible = true;
+    }
 
     void OnBecameInvisible()
     {
@@ -41,7 +48,7 @@ public class SymbolVisibilitySuccess : MonoBehaviour
     {
         if (done || !isVisible) return;
 
-        // ⭐ NEW: check occlusion
+        // check occlusion
         if (!IsActuallyVisible())
         {
             visibleTime = 0f;
@@ -73,11 +80,10 @@ public class SymbolVisibilitySuccess : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, dist + 0.01f))
         {
-            // ✅ works even if collider is on a child object
+            // still check visibility against the PARENT
             return hit.collider.GetComponentInParent<SymbolVisibilitySuccess>() == this;
         }
 
         return false;
     }
-
 }
