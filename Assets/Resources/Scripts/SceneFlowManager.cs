@@ -37,6 +37,9 @@ public class SceneFlowManager : MonoBehaviour
 
     Coroutine activeUIFadeRoutine;
 
+    // track current page so we can crossfade correctly even when active becomes null
+    GameObject currentPage;
+
     void Start()
     {
         DisableAllTrialContent();
@@ -74,6 +77,7 @@ public class SceneFlowManager : MonoBehaviour
         snappedCorrectCount = 0;
         active = null;
         lastCompletedTrial = null;
+        currentPage = null;
 
         if (onboardingCube != null)
             onboardingCube.gameObject.SetActive(phase == Phase.Onboarding);
@@ -110,16 +114,11 @@ public class SceneFlowManager : MonoBehaviour
 
     public void OnOnboardingDone()
     {
-        // Fade out current UI, then switch phase
-        FadeOutUIThen(() =>
-        {
-            SetPhase(Phase.OA);
-        });
+        FadeOutUIThen(() => { SetPhase(Phase.OA); });
     }
 
     public void OnOADoneButton()
     {
-        // Fade out current UI, then do the transition
         FadeOutUIThen(() =>
         {
             if (lastCompletedTrial != null)
@@ -202,19 +201,19 @@ public class SceneFlowManager : MonoBehaviour
     {
         if (active == null) return;
 
-        active.uiPage4?.SetActive(false);
         lastCompletedTrial = active;
 
+        // crossfade FROM whatever is currently shown TO the next page
         if (currentPhase == Phase.Onboarding)
         {
-            active.uiDone?.SetActive(true);
+            CrossFadeTo(active.uiDone);
         }
         else
         {
             if (snappedCorrectCount < totalPlants)
-                active.uiPage5?.SetActive(true);
+                CrossFadeTo(active.uiPage5);
             else
-                active.uiDone?.SetActive(true);
+                CrossFadeTo(active.uiDone);
         }
 
         active = null;
@@ -225,6 +224,7 @@ public class SceneFlowManager : MonoBehaviour
         if (active != null || trial == null) return;
 
         active = trial;
+        currentPage = null;
 
         foreach (var cube in GameObject.FindGameObjectsWithTag("Cube"))
         {
@@ -264,16 +264,24 @@ public class SceneFlowManager : MonoBehaviour
         onboardingCube.anchor.Mount();
     }
 
+    // -------------------- UI PAGES (CROSS-FADE) --------------------
+
     public void ShowPage1()
     {
         if (active == null) return;
 
         FadeInUIRoot();
 
-        active.uiPage1.SetActive(true);
-        active.uiPage2.SetActive(false);
-        active.uiPage3.SetActive(false);
-        active.uiPage4.SetActive(false);
+        SetPageActive(active.uiPage1, true);
+        SetPageActive(active.uiPage2, false);
+        SetPageActive(active.uiPage3, false);
+        SetPageActive(active.uiPage4, false);
+        SetPageActive(active.uiPage5, false);
+        SetPageActive(active.uiDone, false);
+
+        // page1 is the first visible page
+        SetCanvasGroupInstant(active.uiPage1, 1f, true);
+        currentPage = active.uiPage1;
 
         if (active.symbol != null) active.symbol.SetActive(false);
 
@@ -285,37 +293,30 @@ public class SceneFlowManager : MonoBehaviour
     {
         if (active == null) return;
 
-        active.uiPage1.SetActive(false);
-        active.uiPage2.SetActive(true);
-
         if (active.symbol != null) active.symbol.SetActive(true);
+
+        CrossFadeTo(active.uiPage2);
     }
 
     public void ShowPage3()
     {
         if (active == null) return;
 
-        active.uiPage1.SetActive(false);
-        active.uiPage2.SetActive(false);
-        if (active.uiPage3 != null) active.uiPage3.SetActive(true);
-
         if (sunStation != null) sunStation.SetActive(true);
         if (waterStation != null) waterStation.SetActive(true);
+
+        CrossFadeTo(active.uiPage3);
     }
 
     public void ShowPage4()
     {
         if (active == null) return;
 
-        active.uiPage1.SetActive(false);
-        active.uiPage2.SetActive(false);
-        if (active.uiPage3 != null) active.uiPage3.SetActive(false);
-        if (active.uiPage4 != null) active.uiPage4.SetActive(true);
+        CrossFadeTo(active.uiPage4);
     }
 
     public void CloseUI5()
     {
-        // Fade out UI first, then do the cube fade + re-enable colliders
         FadeOutUIThen(() =>
         {
             if (lastCompletedTrial != null)
@@ -328,12 +329,12 @@ public class SceneFlowManager : MonoBehaviour
             }
 
             lastCompletedTrial = null;
+            currentPage = null;
         });
     }
 
     public void CloseUI()
     {
-        // Fade out UI and then disable it (instead of immediate SetActive(false))
         FadeOutUIThen(() =>
         {
             foreach (var cube in GameObject.FindGameObjectsWithTag("Cube"))
@@ -343,12 +344,13 @@ public class SceneFlowManager : MonoBehaviour
             }
 
             active = null;
+            currentPage = null;
         });
     }
 
     public CubeTrial GetActiveTrial() => active;
 
-    // -------------------- UI FADE HELPERS --------------------
+    // -------------------- UI ROOT FADE HELPERS --------------------
 
     void FadeInUIRoot()
     {
@@ -362,7 +364,6 @@ public class SceneFlowManager : MonoBehaviour
 
     void FadeOutUIThen(Action after)
     {
-        // figure out which UI root is currently visible:
         GameObject root = null;
         if (active != null && active.uiRoot != null) root = active.uiRoot;
         else if (lastCompletedTrial != null && lastCompletedTrial.uiRoot != null) root = lastCompletedTrial.uiRoot;
@@ -412,5 +413,102 @@ public class SceneFlowManager : MonoBehaviour
         bool visible = cg.alpha >= 0.99f;
         cg.interactable = visible;
         cg.blocksRaycasts = visible;
+    }
+
+    // -------------------- PAGE CROSSFADE --------------------
+
+    void CrossFadeTo(GameObject nextPage)
+    {
+        if (nextPage == null) return;
+
+        // If we don't have a current page yet, just show it.
+        if (currentPage == null)
+        {
+            nextPage.SetActive(true);
+            SetCanvasGroupInstant(nextPage, 1f, true);
+            currentPage = nextPage;
+            return;
+        }
+
+        if (currentPage == nextPage) return;
+
+        CrossFadePages(currentPage, nextPage);
+        currentPage = nextPage;
+    }
+
+    void CrossFadePages(GameObject fromPage, GameObject toPage)
+    {
+        if (fromPage == null || toPage == null) return;
+
+        var from = fromPage.GetComponent<CanvasGroup>();
+        var to = toPage.GetComponent<CanvasGroup>();
+
+        if (from == null || to == null)
+        {
+            fromPage.SetActive(false);
+            toPage.SetActive(true);
+            return;
+        }
+
+        fromPage.SetActive(true);
+        toPage.SetActive(true);
+
+        to.alpha = 0f;
+        to.interactable = false;
+        to.blocksRaycasts = false;
+
+        from.alpha = 1f;
+        from.interactable = false;
+        from.blocksRaycasts = false;
+
+        StartCoroutine(CrossFade(from, to, uiFadeDuration));
+    }
+
+    IEnumerator CrossFade(CanvasGroup from, CanvasGroup to, float duration)
+    {
+        float t = 0f;
+
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float k = Mathf.Clamp01(duration <= 0f ? 1f : t / duration);
+
+            if (from != null) from.alpha = 1f - k;
+            if (to != null) to.alpha = k;
+
+            yield return null;
+        }
+
+        if (from != null)
+        {
+            from.alpha = 0f;
+            from.interactable = false;
+            from.blocksRaycasts = false;
+            from.gameObject.SetActive(false);
+        }
+
+        if (to != null)
+        {
+            to.alpha = 1f;
+            to.interactable = true;
+            to.blocksRaycasts = true;
+        }
+    }
+
+    void SetPageActive(GameObject page, bool on)
+    {
+        if (page != null) page.SetActive(on);
+    }
+
+    void SetCanvasGroupInstant(GameObject page, float alpha, bool interactable)
+    {
+        if (page == null) return;
+
+        var cg = page.GetComponent<CanvasGroup>();
+        if (cg == null) return;
+
+        cg.alpha = alpha;
+        cg.interactable = interactable;
+        cg.blocksRaycasts = interactable;
     }
 }
