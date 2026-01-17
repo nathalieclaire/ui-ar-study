@@ -936,6 +936,7 @@ MonoBehaviour:
   - {fileID: 580650516}
   - {fileID: 837375364}
   totalPlants: 3
+  uiFadeDuration: 0.5
 --- !u!4 &53066916
 Transform:
   m_ObjectHideFlags: 0

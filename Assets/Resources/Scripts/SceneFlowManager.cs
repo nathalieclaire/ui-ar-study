@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System;
 
 public class SceneFlowManager : MonoBehaviour
 {
@@ -25,11 +26,16 @@ public class SceneFlowManager : MonoBehaviour
     [Header("Progress (OA/HA only)")]
     public int totalPlants = 3;
 
+    [Header("UI Fade")]
+    public float uiFadeDuration = 0.25f;
+
     private int snappedCorrectCount = 0;
     private Phase currentPhase = Phase.Onboarding;
 
     private CubeTrial active;
     private CubeTrial lastCompletedTrial;
+
+    Coroutine activeUIFadeRoutine;
 
     void Start()
     {
@@ -100,20 +106,31 @@ public class SceneFlowManager : MonoBehaviour
         }
     }
 
+    // ---------------- fade-out FIRST, then change phase ----------------
+
     public void OnOnboardingDone()
     {
-        SetPhase(Phase.OA);
+        // Fade out current UI, then switch phase
+        FadeOutUIThen(() =>
+        {
+            SetPhase(Phase.OA);
+        });
     }
 
     public void OnOADoneButton()
     {
-        if (lastCompletedTrial != null)
-            StartCoroutine(FadeOutAndDisableCube(lastCompletedTrial));
+        // Fade out current UI, then do the transition
+        FadeOutUIThen(() =>
+        {
+            if (lastCompletedTrial != null)
+                StartCoroutine(FadeOutAndDisableCube(lastCompletedTrial));
 
-        ToggleCubeSet(oaCubes, false);
-        SetPhase(Phase.HA);
+            ToggleCubeSet(oaCubes, false);
+            SetPhase(Phase.HA);
+        });
     }
 
+    // called by StationCheck when a cube snaps correctly
     public void OnPlantSnappedCorrectly()
     {
         if (currentPhase == Phase.Onboarding && active == onboardingCube)
@@ -251,7 +268,8 @@ public class SceneFlowManager : MonoBehaviour
     {
         if (active == null) return;
 
-        active.uiRoot.SetActive(true);
+        FadeInUIRoot();
+
         active.uiPage1.SetActive(true);
         active.uiPage2.SetActive(false);
         active.uiPage3.SetActive(false);
@@ -297,33 +315,102 @@ public class SceneFlowManager : MonoBehaviour
 
     public void CloseUI5()
     {
-        if (lastCompletedTrial == null) return;
-
-        StartCoroutine(FadeOutAndDisableCube(lastCompletedTrial));
-
-        foreach (var cube in GameObject.FindGameObjectsWithTag("Cube"))
+        // Fade out UI first, then do the cube fade + re-enable colliders
+        FadeOutUIThen(() =>
         {
-            var col = cube.GetComponent<Collider>();
-            if (col != null) col.enabled = true;
-        }
+            if (lastCompletedTrial != null)
+                StartCoroutine(FadeOutAndDisableCube(lastCompletedTrial));
 
-        lastCompletedTrial = null;
+            foreach (var cube in GameObject.FindGameObjectsWithTag("Cube"))
+            {
+                var col = cube.GetComponent<Collider>();
+                if (col != null) col.enabled = true;
+            }
+
+            lastCompletedTrial = null;
+        });
     }
 
     public void CloseUI()
     {
-        if (active == null) return;
-
-        active.uiRoot.SetActive(false);
-
-        foreach (var cube in GameObject.FindGameObjectsWithTag("Cube"))
+        // Fade out UI and then disable it (instead of immediate SetActive(false))
+        FadeOutUIThen(() =>
         {
-            var col = cube.GetComponent<Collider>();
-            if (col != null) col.enabled = true;
-        }
+            foreach (var cube in GameObject.FindGameObjectsWithTag("Cube"))
+            {
+                var col = cube.GetComponent<Collider>();
+                if (col != null) col.enabled = true;
+            }
 
-        active = null;
+            active = null;
+        });
     }
 
     public CubeTrial GetActiveTrial() => active;
+
+    // -------------------- UI FADE HELPERS --------------------
+
+    void FadeInUIRoot()
+    {
+        if (active == null || active.uiRoot == null) return;
+
+        active.uiRoot.SetActive(true);
+
+        if (activeUIFadeRoutine != null) StopCoroutine(activeUIFadeRoutine);
+        activeUIFadeRoutine = StartCoroutine(FadeCanvasGroup(active.uiRoot, 0f, 1f, uiFadeDuration));
+    }
+
+    void FadeOutUIThen(Action after)
+    {
+        // figure out which UI root is currently visible:
+        GameObject root = null;
+        if (active != null && active.uiRoot != null) root = active.uiRoot;
+        else if (lastCompletedTrial != null && lastCompletedTrial.uiRoot != null) root = lastCompletedTrial.uiRoot;
+
+        if (root == null)
+        {
+            after?.Invoke();
+            return;
+        }
+
+        if (activeUIFadeRoutine != null) StopCoroutine(activeUIFadeRoutine);
+        activeUIFadeRoutine = StartCoroutine(FadeOutAndThen(root, after));
+    }
+
+    IEnumerator FadeOutAndThen(GameObject uiRoot, Action after)
+    {
+        yield return FadeCanvasGroup(uiRoot, 1f, 0f, uiFadeDuration);
+        uiRoot.SetActive(false);
+        after?.Invoke();
+    }
+
+    IEnumerator FadeCanvasGroup(GameObject uiRoot, float from, float to, float duration)
+    {
+        var cg = uiRoot.GetComponent<CanvasGroup>();
+        if (cg == null) cg = uiRoot.AddComponent<CanvasGroup>();
+
+        cg.alpha = from;
+        cg.interactable = false;
+        cg.blocksRaycasts = false;
+
+        if (duration <= 0f)
+        {
+            cg.alpha = to;
+        }
+        else
+        {
+            float t = 0f;
+            while (t < duration)
+            {
+                t += Time.deltaTime;
+                cg.alpha = Mathf.Lerp(from, to, t / duration);
+                yield return null;
+            }
+            cg.alpha = to;
+        }
+
+        bool visible = cg.alpha >= 0.99f;
+        cg.interactable = visible;
+        cg.blocksRaycasts = visible;
+    }
 }
