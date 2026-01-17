@@ -29,6 +29,11 @@ public class SceneFlowManager : MonoBehaviour
     [Header("UI Fade")]
     public float uiFadeDuration = 0.25f;
 
+    [Header("Plant Shrink (replaces plant fade-out)")]
+    public float shrinkDuration = 0.35f;
+    public float shrinkEndScale = 0.02f;      // avoid 0 for stability
+    public float shrinkBottomOffset = 0f;     // optional: e.g. 0.01f to avoid tiny clipping
+
     private int snappedCorrectCount = 0;
     private Phase currentPhase = Phase.Onboarding;
 
@@ -122,7 +127,7 @@ public class SceneFlowManager : MonoBehaviour
         FadeOutUIThen(() =>
         {
             if (lastCompletedTrial != null)
-                StartCoroutine(FadeOutAndDisableCube(lastCompletedTrial));
+                StartCoroutine(ShrinkDownAndDisableCube(lastCompletedTrial));
 
             ToggleCubeSet(oaCubes, false);
             SetPhase(Phase.HA);
@@ -165,36 +170,71 @@ public class SceneFlowManager : MonoBehaviour
         if (correct) OnCorrectAnswered();
     }
 
-    IEnumerator FadeOutAndDisableCube(CubeTrial trial)
+    // -------------------- PLANT SHRINK (replaces FadeOutAndDisableCube) --------------------
+
+    IEnumerator ShrinkDownAndDisableCube(CubeTrial trial)
     {
         if (trial == null) yield break;
 
-        Renderer[] renderers = trial.GetComponentsInChildren<Renderer>();
-        float duration = 2f;
-        float t = 0f;
+        Transform t = trial.transform;
 
-        while (t < duration)
+        Vector3 startScale = t.localScale;
+
+        // Anchor = cube's current bottom in WORLD space
+        Bounds b0 = GetWorldBounds(t);
+        float anchorY = b0.min.y + shrinkBottomOffset;
+
+        // Disable interaction while shrinking
+        var grab = trial.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
+        if (grab != null) grab.enabled = false;
+
+        var cols = trial.GetComponentsInChildren<Collider>(true);
+        foreach (var c in cols) c.enabled = false;
+
+        float duration = Mathf.Max(0.001f, shrinkDuration);
+        float time = 0f;
+
+        while (time < duration)
         {
-            t += Time.deltaTime;
-            float alpha = Mathf.Lerp(1f, 0f, t / duration);
+            time += Time.deltaTime;
+            float k = Mathf.Clamp01(time / duration);
 
-            foreach (var r in renderers)
-            {
-                foreach (var mat in r.materials)
-                {
-                    if (mat.HasProperty("_Color"))
-                    {
-                        Color c = mat.color;
-                        c.a = alpha;
-                        mat.color = c;
-                    }
-                }
-            }
+            float s = Mathf.Lerp(1f, shrinkEndScale, k);
+            t.localScale = startScale * s;
+
+            // Shift so bottom stays anchored
+            Bounds b = GetWorldBounds(t);
+            float bottomY = b.min.y + shrinkBottomOffset;
+            float dy = anchorY - bottomY;
+            t.position += new Vector3(0f, dy, 0f);
+
             yield return null;
+        }
+
+        // Final snap to avoid tiny drift
+        t.localScale = startScale * shrinkEndScale;
+        {
+            Bounds b = GetWorldBounds(t);
+            float bottomY = b.min.y + shrinkBottomOffset;
+            float dy = anchorY - bottomY;
+            t.position += new Vector3(0f, dy, 0f);
         }
 
         trial.gameObject.SetActive(false);
         if (trial.uiRoot != null) trial.uiRoot.SetActive(false);
+    }
+
+    Bounds GetWorldBounds(Transform root)
+    {
+        var renderers = root.GetComponentsInChildren<Renderer>(true);
+        if (renderers.Length == 0)
+            return new Bounds(root.position, Vector3.zero);
+
+        Bounds b = renderers[0].bounds;
+        for (int i = 1; i < renderers.Length; i++)
+            b.Encapsulate(renderers[i].bounds);
+
+        return b;
     }
 
     void OnCorrectAnswered()
@@ -320,7 +360,7 @@ public class SceneFlowManager : MonoBehaviour
         FadeOutUIThen(() =>
         {
             if (lastCompletedTrial != null)
-                StartCoroutine(FadeOutAndDisableCube(lastCompletedTrial));
+                StartCoroutine(ShrinkDownAndDisableCube(lastCompletedTrial));
 
             foreach (var cube in GameObject.FindGameObjectsWithTag("Cube"))
             {
