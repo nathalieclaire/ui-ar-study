@@ -214,6 +214,7 @@ GameObject:
   - component: {fileID: 20712652}
   - component: {fileID: 20712651}
   - component: {fileID: 20712655}
+  - component: {fileID: 20712656}
   m_Layer: 0
   m_Name: UI_blue_2
   m_TagString: Untagged
@@ -335,6 +336,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &20712656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 20712647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1538044223}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!114 &23323763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1093,6 +1112,7 @@ GameObject:
   - component: {fileID: 58954750}
   - component: {fileID: 58954749}
   - component: {fileID: 58954753}
+  - component: {fileID: 58954754}
   m_Layer: 0
   m_Name: UI_grey_6_done
   m_TagString: Untagged
@@ -1214,6 +1234,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &58954754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58954745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 837375361}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &60315193
 GameObject:
   m_ObjectHideFlags: 0
@@ -2296,6 +2334,7 @@ GameObject:
   - component: {fileID: 185685076}
   - component: {fileID: 185685075}
   - component: {fileID: 185685081}
+  - component: {fileID: 185685082}
   m_Layer: 0
   m_Name: UI_green_3
   m_TagString: Untagged
@@ -2442,6 +2481,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &185685082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 185685073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8313770552096744941}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &195943299
 GameObject:
   m_ObjectHideFlags: 0
@@ -2838,6 +2895,7 @@ GameObject:
   - component: {fileID: 274303675}
   - component: {fileID: 274303674}
   - component: {fileID: 330503382}
+  - component: {fileID: 330503383}
   m_Layer: 0
   m_Name: UI_grey_3
   m_TagString: Untagged
@@ -3396,6 +3454,7 @@ GameObject:
   - component: {fileID: 1622617579}
   - component: {fileID: 1622617578}
   - component: {fileID: 1622617581}
+  - component: {fileID: 1622617582}
   m_Layer: 0
   m_Name: UI_blue_2
   m_TagString: Untagged
@@ -3417,6 +3476,7 @@ GameObject:
   - component: {fileID: 330301791}
   - component: {fileID: 330301790}
   - component: {fileID: 330301794}
+  - component: {fileID: 330301795}
   m_Layer: 0
   m_Name: UI_green_5_next_plant
   m_TagString: Untagged
@@ -3538,6 +3598,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &330301795
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330301786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 580650513}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!114 &330503377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3652,6 +3730,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &330503383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 274303673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1094490368}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1001 &343356141
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3910,6 +4006,7 @@ GameObject:
   - component: {fileID: 357007703}
   - component: {fileID: 357007699}
   - component: {fileID: 357007709}
+  - component: {fileID: 357007710}
   m_Layer: 0
   m_Name: UI_grey_6_done
   m_TagString: Untagged
@@ -4056,6 +4153,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &357007710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357007698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1094490368}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &371165281
 GameObject:
   m_ObjectHideFlags: 0
@@ -4114,6 +4229,7 @@ GameObject:
   - component: {fileID: 382515984}
   - component: {fileID: 382515983}
   - component: {fileID: 382515987}
+  - component: {fileID: 382515988}
   m_Layer: 0
   m_Name: UI_grey_2
   m_TagString: Untagged
@@ -4235,6 +4351,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &382515988
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 382515979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 837375361}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &405768956
 GameObject:
   m_ObjectHideFlags: 0
@@ -6129,6 +6263,7 @@ GameObject:
   - component: {fileID: 551613205}
   - component: {fileID: 551613204}
   - component: {fileID: 551613208}
+  - component: {fileID: 551613209}
   m_Layer: 0
   m_Name: UI_green_3
   m_TagString: Untagged
@@ -6250,6 +6385,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &551613209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551613200}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 580650513}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &555301287
 GameObject:
   m_ObjectHideFlags: 0
@@ -6526,6 +6679,7 @@ GameObject:
   - component: {fileID: 566973065}
   - component: {fileID: 566973064}
   - component: {fileID: 566973070}
+  - component: {fileID: 566973071}
   m_Layer: 0
   m_Name: UI_green_5_next_plant
   m_TagString: Untagged
@@ -6672,6 +6826,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &566973071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566973062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8313770552096744941}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1001 &568853298
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6797,6 +6969,7 @@ GameObject:
   - component: {fileID: 1550360857}
   - component: {fileID: 1550360856}
   - component: {fileID: 1550360858}
+  - component: {fileID: 1550360859}
   m_Layer: 0
   m_Name: UI_grey_2
   m_TagString: Untagged
@@ -7693,6 +7866,7 @@ GameObject:
   - component: {fileID: 643533973}
   - component: {fileID: 643533972}
   - component: {fileID: 643533976}
+  - component: {fileID: 643533977}
   m_Layer: 0
   m_Name: UI_green_6_done
   m_TagString: Untagged
@@ -7814,6 +7988,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &643533977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643533968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 580650513}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!4 &653070952 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6ad7434be7212414ea46f5a5f9a98e0c, type: 3}
@@ -8137,6 +8329,7 @@ GameObject:
   - component: {fileID: 674636784}
   - component: {fileID: 674636783}
   - component: {fileID: 674636789}
+  - component: {fileID: 674636790}
   m_Layer: 0
   m_Name: UI_onboarding_4_question
   m_TagString: Untagged
@@ -8283,6 +8476,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &674636790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 674636781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 585980587}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &676394862
 GameObject:
   m_ObjectHideFlags: 0
@@ -8844,6 +9055,7 @@ GameObject:
   - component: {fileID: 730769976}
   - component: {fileID: 730769977}
   - component: {fileID: 730769978}
+  - component: {fileID: 730769979}
   m_Layer: 0
   m_Name: UI_grey_1
   m_TagString: Untagged
@@ -8990,6 +9202,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &730769979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 730769970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1094490368}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &731266351
 GameObject:
   m_ObjectHideFlags: 0
@@ -9909,6 +10139,7 @@ GameObject:
   - component: {fileID: 815290722}
   - component: {fileID: 815290721}
   - component: {fileID: 815290725}
+  - component: {fileID: 815290726}
   m_Layer: 0
   m_Name: UI_blue_1
   m_TagString: Untagged
@@ -10030,6 +10261,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &815290726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815290717}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1538044223}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!222 &822362920
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -10756,6 +11005,7 @@ GameObject:
   - component: {fileID: 846894578}
   - component: {fileID: 846894577}
   - component: {fileID: 846894583}
+  - component: {fileID: 846894584}
   m_Layer: 0
   m_Name: UI_blue_4_question
   m_TagString: Untagged
@@ -10902,6 +11152,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &846894584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 846894575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8825839948264526186}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &852872028
 GameObject:
   m_ObjectHideFlags: 0
@@ -12986,6 +13254,7 @@ GameObject:
   - component: {fileID: 1063639679}
   - component: {fileID: 1063639678}
   - component: {fileID: 1063639684}
+  - component: {fileID: 1063639685}
   m_Layer: 0
   m_Name: UI_green_4_question
   m_TagString: Untagged
@@ -13132,6 +13401,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1063639685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063639676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8313770552096744941}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &1081202268
 GameObject:
   m_ObjectHideFlags: 0
@@ -13148,6 +13435,7 @@ GameObject:
   - component: {fileID: 1081202271}
   - component: {fileID: 1081202270}
   - component: {fileID: 1081202276}
+  - component: {fileID: 1081202277}
   m_Layer: 0
   m_Name: UI_onboarding_6_done
   m_TagString: Untagged
@@ -13294,6 +13582,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1081202277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1081202268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 585980587}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &1081232037
 GameObject:
   m_ObjectHideFlags: 0
@@ -14921,6 +15227,7 @@ GameObject:
   - component: {fileID: 1234781848}
   - component: {fileID: 1234781847}
   - component: {fileID: 1234781851}
+  - component: {fileID: 1234781852}
   m_Layer: 0
   m_Name: UI_blue_5_next_plant
   m_TagString: Untagged
@@ -15042,6 +15349,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1234781852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1234781843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1538044223}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &1245293533
 GameObject:
   m_ObjectHideFlags: 0
@@ -15757,6 +16082,7 @@ GameObject:
   - component: {fileID: 1298485750}
   - component: {fileID: 1298485749}
   - component: {fileID: 1298485753}
+  - component: {fileID: 1298485754}
   m_Layer: 0
   m_Name: UI_grey_3
   m_TagString: Untagged
@@ -15878,6 +16204,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1298485754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1298485745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 837375361}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &1300022910
 GameObject:
   m_ObjectHideFlags: 0
@@ -15892,6 +16236,7 @@ GameObject:
   - component: {fileID: 1300022915}
   - component: {fileID: 1300022914}
   - component: {fileID: 1300022918}
+  - component: {fileID: 1300022919}
   m_Layer: 0
   m_Name: UI_green_1
   m_TagString: Untagged
@@ -16013,6 +16358,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1300022919
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1300022910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 580650513}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!222 &1305493029
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16035,6 +16398,7 @@ GameObject:
   - component: {fileID: 1314443287}
   - component: {fileID: 1314443286}
   - component: {fileID: 1314443290}
+  - component: {fileID: 1314443291}
   m_Layer: 0
   m_Name: UI_blue_4_question
   m_TagString: Untagged
@@ -16156,6 +16520,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1314443291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314443282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1538044223}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &1321856422
 GameObject:
   m_ObjectHideFlags: 0
@@ -16513,6 +16895,7 @@ GameObject:
   - component: {fileID: 1335480816}
   - component: {fileID: 1335480815}
   - component: {fileID: 1335480821}
+  - component: {fileID: 1335480822}
   m_Layer: 0
   m_Name: UI_blue_6_done
   m_TagString: Untagged
@@ -16659,6 +17042,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1335480822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1335480813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8825839948264526186}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &1342819747
 GameObject:
   m_ObjectHideFlags: 0
@@ -16970,6 +17371,7 @@ GameObject:
   - component: {fileID: 1409508091}
   - component: {fileID: 1409508090}
   - component: {fileID: 1799508450}
+  - component: {fileID: 1799508451}
   m_Layer: 0
   m_Name: UI_grey_4_question
   m_TagString: Untagged
@@ -17110,6 +17512,7 @@ GameObject:
   - component: {fileID: 1414372606}
   - component: {fileID: 1414372605}
   - component: {fileID: 1414372609}
+  - component: {fileID: 1414372610}
   m_Layer: 0
   m_Name: UI_grey_4_question
   m_TagString: Untagged
@@ -17231,6 +17634,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1414372610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1414372601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 837375361}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &1419371114
 GameObject:
   m_ObjectHideFlags: 0
@@ -18641,6 +19062,7 @@ GameObject:
   - component: {fileID: 1499061174}
   - component: {fileID: 1499061173}
   - component: {fileID: 1499061179}
+  - component: {fileID: 1499061180}
   m_Layer: 0
   m_Name: UI_blue_5_next_plant
   m_TagString: Untagged
@@ -18787,6 +19209,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1499061180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1499061171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8825839948264526186}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &1508381730
 GameObject:
   m_ObjectHideFlags: 0
@@ -19252,6 +19692,7 @@ GameObject:
   - component: {fileID: 1529253608}
   - component: {fileID: 1529253607}
   - component: {fileID: 1529253613}
+  - component: {fileID: 1529253614}
   m_Layer: 0
   m_Name: UI_grey_5_next_plant
   m_TagString: Untagged
@@ -19398,6 +19839,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1529253614
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1529253605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1094490368}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &1532217213
 GameObject:
   m_ObjectHideFlags: 0
@@ -20009,6 +20468,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1550360859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 578222133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1094490368}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1001 &1562283071
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20568,6 +21045,7 @@ GameObject:
   - component: {fileID: 1605583832}
   - component: {fileID: 1605583831}
   - component: {fileID: 1605583837}
+  - component: {fileID: 1605583838}
   m_Layer: 0
   m_Name: UI_green_6_done
   m_TagString: Untagged
@@ -20714,6 +21192,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1605583838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1605583829}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8313770552096744941}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &1605832081
 GameObject:
   m_ObjectHideFlags: 0
@@ -21175,6 +21671,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1622617582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 328268158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8825839948264526186}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &1622999070
 GameObject:
   m_ObjectHideFlags: 0
@@ -21280,6 +21794,7 @@ GameObject:
   - component: {fileID: 1637952574}
   - component: {fileID: 1637952573}
   - component: {fileID: 1637952579}
+  - component: {fileID: 1637952580}
   m_Layer: 0
   m_Name: UI_onboarding_3
   m_TagString: Untagged
@@ -21426,6 +21941,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1637952580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637952571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 585980587}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &1647747484
 GameObject:
   m_ObjectHideFlags: 0
@@ -21555,6 +22088,7 @@ GameObject:
   - component: {fileID: 1692448542}
   - component: {fileID: 1692448541}
   - component: {fileID: 1692448547}
+  - component: {fileID: 1692448548}
   m_Layer: 0
   m_Name: UI_blue_3
   m_TagString: Untagged
@@ -21701,6 +22235,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1692448548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1692448539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8825839948264526186}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &1692983288
 GameObject:
   m_ObjectHideFlags: 0
@@ -21790,6 +22342,7 @@ GameObject:
   - component: {fileID: 1703204292}
   - component: {fileID: 1703204291}
   - component: {fileID: 1703204295}
+  - component: {fileID: 1703204296}
   m_Layer: 0
   m_Name: UI_green_2
   m_TagString: Untagged
@@ -21911,6 +22464,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1703204296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703204287}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 580650513}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!4 &1713877059 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 580968b19f4394f12aaed568ee9a391a, type: 3}
@@ -22013,6 +22584,7 @@ GameObject:
   - component: {fileID: 23323763}
   - component: {fileID: 1736046588}
   - component: {fileID: 1736046589}
+  - component: {fileID: 1736046590}
   m_Layer: 0
   m_Name: UI_green_1
   m_TagString: Untagged
@@ -22065,6 +22637,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1736046590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1736046586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8313770552096744941}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &1749361545
 GameObject:
   m_ObjectHideFlags: 0
@@ -22314,6 +22904,7 @@ GameObject:
   - component: {fileID: 1409508092}
   - component: {fileID: 1777118249}
   - component: {fileID: 1777118250}
+  - component: {fileID: 1777118251}
   m_Layer: 0
   m_Name: UI_blue_1
   m_TagString: Untagged
@@ -22366,6 +22957,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1777118251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777118247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8825839948264526186}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &1779135126
 GameObject:
   m_ObjectHideFlags: 0
@@ -22522,6 +23131,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1799508451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1409508089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1094490368}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &1806758916
 GameObject:
   m_ObjectHideFlags: 0
@@ -22819,6 +23446,7 @@ GameObject:
   - component: {fileID: 1831973635}
   - component: {fileID: 1831973634}
   - component: {fileID: 1831973638}
+  - component: {fileID: 1831973639}
   m_Layer: 0
   m_Name: UI_grey_1
   m_TagString: Untagged
@@ -22940,6 +23568,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1831973639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831973630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 837375361}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &1839572282
 GameObject:
   m_ObjectHideFlags: 0
@@ -22993,6 +23639,7 @@ GameObject:
   - component: {fileID: 1472956068}
   - component: {fileID: 1472956067}
   - component: {fileID: 1848670541}
+  - component: {fileID: 1848670542}
   m_Layer: 0
   m_Name: UI_green_2
   m_TagString: Untagged
@@ -23032,6 +23679,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1848670542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848670539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 8313770552096744941}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1001 &1853595273
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23119,6 +23784,7 @@ GameObject:
   - component: {fileID: 1855318884}
   - component: {fileID: 1855318883}
   - component: {fileID: 1855318887}
+  - component: {fileID: 1855318888}
   m_Layer: 0
   m_Name: UI_blue_6_done
   m_TagString: Untagged
@@ -23240,6 +23906,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1855318888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1855318879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1538044223}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &1859666674
 GameObject:
   m_ObjectHideFlags: 0
@@ -23762,6 +24446,7 @@ GameObject:
   - component: {fileID: 1883947755}
   - component: {fileID: 1883947754}
   - component: {fileID: 1883947758}
+  - component: {fileID: 1883947759}
   m_Layer: 0
   m_Name: UI_green_4_question
   m_TagString: Untagged
@@ -23883,6 +24568,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1883947759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1883947750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 580650513}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &1892047338
 GameObject:
   m_ObjectHideFlags: 0
@@ -24255,6 +24958,7 @@ GameObject:
   - component: {fileID: 1949465398}
   - component: {fileID: 1949465397}
   - component: {fileID: 1949465403}
+  - component: {fileID: 1949465404}
   m_Layer: 0
   m_Name: UI_onboarding_2
   m_TagString: Untagged
@@ -24401,6 +25105,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1949465404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1949465395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 585980587}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &1953835733
 GameObject:
   m_ObjectHideFlags: 0
@@ -25427,6 +26149,7 @@ GameObject:
   - component: {fileID: 1999794303}
   - component: {fileID: 1999794302}
   - component: {fileID: 1999794306}
+  - component: {fileID: 1999794307}
   m_Layer: 0
   m_Name: UI_blue_3
   m_TagString: Untagged
@@ -25548,6 +26271,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1999794307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1999794298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 1538044223}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &2002177217
 GameObject:
   m_ObjectHideFlags: 0
@@ -26310,6 +27051,7 @@ GameObject:
   - component: {fileID: 2040671833}
   - component: {fileID: 2040671832}
   - component: {fileID: 2040671836}
+  - component: {fileID: 2040671837}
   m_Layer: 0
   m_Name: UI_grey_5_next_plant
   m_TagString: Untagged
@@ -26431,6 +27173,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &2040671837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2040671828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 837375361}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1 &2042180527
 GameObject:
   m_ObjectHideFlags: 0
@@ -28426,6 +29186,7 @@ GameObject:
   - component: {fileID: 2147138192}
   - component: {fileID: 2147138191}
   - component: {fileID: 2147138197}
+  - component: {fileID: 2147138198}
   m_Layer: 0
   m_Name: UI_onboarding_1
   m_TagString: Untagged
@@ -28572,6 +29333,24 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &2147138198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2147138189}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9bfb8dd289c54995939fdc2c80fa428, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 585980587}
+  fadeOutDistance: 1.4
+  fadeInDistance: 1.1
+  fadeDuration: 0.25
+  useXZOnly: 0
+  disableInteractionWhenHidden: 1
 --- !u!1001 &1237020683194544388
 PrefabInstance:
   m_ObjectHideFlags: 0
