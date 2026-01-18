@@ -63,9 +63,7 @@ public class AnchorCalibrationManager : MonoBehaviour
         if (sunAnchorTarget != null)   { sunTargetPos0   = sunAnchorTarget.position;   sunTargetRot0   = sunAnchorTarget.rotation; }
     }
 
-    // ─────────────────────────────────────────────────────────────
     // ENTRY POINT (called from SessionBootstrap / scene start)
-    // ─────────────────────────────────────────────────────────────
 
     public void StartCalibration()
     {
@@ -87,9 +85,7 @@ public class AnchorCalibrationManager : MonoBehaviour
         ResetCalibration();
     }
 
-    // ─────────────────────────────────────────────────────────────
     // UI BUTTONS
-    // ─────────────────────────────────────────────────────────────
 
     // Hook to RESET button
     public void ResetCalibration()
@@ -113,15 +109,13 @@ public class AnchorCalibrationManager : MonoBehaviour
         if (calibrationUIRoot != null)
             calibrationUIRoot.SetActive(false);
 
-        // 🔒 hide calibration cubes completely
+        // hide calibration cubes completely
         SetCalibrationCubesVisible(false);
 
         CalibrationFinished?.Invoke();
     }
 
-    // ─────────────────────────────────────────────────────────────
     // INTERNALS
-    // ─────────────────────────────────────────────────────────────
 
     void ApplyCubeToTarget(Transform cube, Transform target)
     {

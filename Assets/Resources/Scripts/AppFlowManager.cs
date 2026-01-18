@@ -3,15 +3,10 @@ using UnityEngine.SceneManagement;
 
 public class AppFlowManager : MonoBehaviour
 {
-    // Scene name config (edit in Inspector) 
     [Header("Scene Names")]
-    public string mainMenuScene   = "MainMenu";
-    public string onboardingScene = "Onboarding";
-    public string session1Scene   = "Session1";
-    public string session2Scene   = "Session2";
-    public string setAnchorsScene = "SetAnchors";   // optional for later
+    [SerializeField] string mainMenuScene = "MainMenu";
+    [SerializeField] string session1Scene = "Session_OA_HA";
 
-    // Singleton so it survives scene loads (avoids accidential duplicates)
     public static AppFlowManager Instance { get; private set; }
 
     void Awake()
@@ -24,61 +19,28 @@ public class AppFlowManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        Debug.Log("AppFlowManager: READY 🎉");
     }
 
-    // Helpers 
-    void LoadSceneByName(string sceneName)
+    void LoadScene(string sceneName)
     {
-        if (string.IsNullOrEmpty(sceneName))
+        if (string.IsNullOrWhiteSpace(sceneName))
         {
-            Debug.LogError("AppFlowManager: scene name is empty");
+            Debug.LogError("[AppFlowManager] Scene name is empty.");
             return;
         }
 
         SceneManager.LoadScene(sceneName);
     }
-    
 
-    // Main Menu Buttons
-
-    // Button 1: "Set Anchors"
-    // For now this can load a placeholder scene (or do nothing if setAnchorsScene left empty)
-    public void GoToSetAnchors()
-    {
-        if (string.IsNullOrEmpty(setAnchorsScene))
-        {
-            Debug.Log("AppFlowManager.GoToSetAnchors called, but no scene configured yet.");
-            return;
-        }
-
-        LoadSceneByName(setAnchorsScene);
-    }
-
-    // Button 2: "Onboarding"  - Onboarding scene
-    public void StartOnboarding()
-    {
-        LoadSceneByName(onboardingScene);
-    }
-
-    // Button 3: "Start Session" - Session 1
+    // Main Menu button: "Start Session"
     public void StartSession()
     {
-        LoadSceneByName(session1Scene);
+        LoadScene(session1Scene);
     }
 
-
-    // Session flow methods to use inside scenes
-
-    // Call from UI in Session 1 to go directly to Session 2
-    public void GoToSession2()
-    {
-        LoadSceneByName(session2Scene);
-    }
-
-    // Call from UI in Session 2 to go back to main menu
+    // In-session button: "Return to Main Menu"
     public void ReturnToMainMenu()
     {
-        LoadSceneByName(mainMenuScene);
+        LoadScene(mainMenuScene);
     }
 }
