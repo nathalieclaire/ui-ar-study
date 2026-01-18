@@ -21,6 +21,8 @@ public class StationCheck : MonoBehaviour
     public float okFlashCooldown = 1.5f;
 
     SceneFlowManager flow;
+    StationAudio stationAudio;
+
     Color originalColor;
     Coroutine flashRoutine;
 
@@ -31,6 +33,11 @@ public class StationCheck : MonoBehaviour
     void Start()
     {
         flow = FindFirstObjectByType<SceneFlowManager>();
+
+        stationAudio = GetComponent<StationAudio>();
+        if (stationAudio == null)
+            Debug.LogWarning($"[StationCheck] No StationAudio found on '{name}'. Station sounds won't play.");
+
         if (stationRenderer == null)
             stationRenderer = GetComponentInChildren<Renderer>();
 
@@ -58,6 +65,7 @@ public class StationCheck : MonoBehaviour
             {
                 okFlashNextAllowed[id] = now + okFlashCooldown;
                 TriggerFlash(okColor);
+                stationAudio?.PlayCorrect();
             }
 
             StartCoroutine(SnapWhenReleased(trial));
@@ -77,6 +85,7 @@ public class StationCheck : MonoBehaviour
         {
             wrongFlashNextAllowed[id] = now + wrongFlashCooldown;
             TriggerFlash(wrongColor);
+            stationAudio?.PlayWrong();
         }
     }
 
