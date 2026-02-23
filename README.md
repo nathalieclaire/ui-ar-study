@@ -59,7 +59,7 @@ The anchoring manipulation was implemented by re-parenting the UI canvas either 
 
 ## Third-Party Assets
 
-Some 3D models and audio assets were obtained from licensed sources (e.g., royalty-free libraries).
+Some 3D models and audio assets were obtained from licensed sources (e.g., royalty-free libraries). Assets are included for academic review only and remain subject to their respective licenses.
 
 ---
 
