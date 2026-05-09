@@ -57,9 +57,11 @@ The anchoring manipulation was implemented by re-parenting the UI canvas either 
 
 ---
 
-## Third-Party Assets
+## A Note on Removed Assets
 
-Some 3D models and audio assets were obtained from licensed sources (e.g., royalty-free libraries). Assets are included for academic review only and remain subject to their respective licenses.
+The original `Assets/Models/` folder of this project contained 3D models obtained from licensed sources (royalty-free libraries) that do not permit public redistribution. To make this repository publicly available while respecting these licenses, the entire `Assets/Models/` directory has been retroactively removed from the full Git history.
+
+As a result, opening this project in Unity will produce missing-reference warnings for the affected scenes and prefabs. The project structure, code, scene logic, and study flow remain fully intact and documented. To run the prototype, the missing models can be replaced with any equivalent assets (own work, CC0 sources, or alternative licensed packs) by placing them in `Assets/Models/` and reassigning the references in the relevant scenes.
 
 ---
 
