@@ -4,6 +4,8 @@ A research driven AR prototype built for the Meta Quest 3, exploring how spatial
 
 > "Head-anchored vs. Object-anchored Spatial Interfaces: A Comparative Study of Usability, Task Load, and Cognitive Load in Educational Augmented Reality"
 
+Supervised by Prof. Dr.-Ing. Nassrin Hajinejad and Prof. Dr.-Ing. Carsten Busch
+
 ## What it is
 
 I designed and built a passthrough AR learning prototype on Meta Quest 3 to compare two ways of placing instructional UI in space: anchored to the user's head, or anchored to the object being learned about. 17 participants tested both conditions in a within subject study. **Object anchored placement scored significantly higher on usability (SUS, p = .03)**, with consistent directional advantages on workload and extraneous cognitive load.
